@@ -1,60 +1,50 @@
 import {
-  AppsOutline,
-  GridOutline,
-  HomeOutline,
-  LogOutOutline,
-  NewspaperOutline,
-  NotificationsOutline,
-  PeopleOutline,
-  PieChartOutline,
-} from "react-ionicons";
+  IoAppsOutline,
+  IoGridOutline,
+  IoHomeOutline,
+  IoLogOutOutline,
+  IoNewspaperOutline,
+  IoNotificationsOutline,
+  IoPeopleOutline,
+  IoPieChartOutline,
+} from "react-icons/io5";
 
 const Sidebar = () => {
   const navLinks = [
     {
-      title: "Home",
-      active: false,
-      icon: <HomeOutline color={"#555555"} width={"22px"} height={"22px"} />,
-    },
-    {
-      title: "Boards",
-      active: true,
-      icon: <AppsOutline color={"#555555"} width={"22px"} height={"22px"} />,
-    },
-    {
-      title: "Projects",
-      active: false,
-      icon: <GridOutline color={"#555555"} width={"22px"} height={"22px"} />,
-    },
-    {
-      title: "Analytics",
-      active: false,
-      icon: (
-        <PieChartOutline color={"#555555"} width={"22px"} height={"22px"} />
-      ),
-    },
-    {
       title: "Workflows",
       active: false,
-      icon: <PeopleOutline color={"#555555"} width={"22px"} height={"22px"} />,
+      icon: <IoPeopleOutline color={"#555555"} size={"22px"} />,
+    },
+    {
+      title: "Home",
+      active: true,
+      icon: <IoHomeOutline color={"#555555"} size={"22px"} />,
     },
     {
       title: "Notifications",
       active: false,
-      icon: (
-        <NotificationsOutline
-          color={"#555555"}
-          width={"22px"}
-          height={"22px"}
-        />
-      ),
+      icon: <IoNotificationsOutline color={"#555555"} size={"22px"} />,
     },
     {
       title: "Newsletter",
       active: false,
-      icon: (
-        <NewspaperOutline color={"#555555"} width={"22px"} height={"22px"} />
-      ),
+      icon: <IoNewspaperOutline color={"#555555"} size={"22px"} />,
+    },
+    {
+      title: "Analytics",
+      active: false,
+      icon: <IoPieChartOutline color={"#555555"} size={"22px"} />,
+    },
+    {
+      title: "Boards",
+      active: false,
+      icon: <IoAppsOutline color={"#555555"} size={"22px"} />,
+    },
+    {
+      title: "Projects",
+      active: false,
+      icon: <IoGridOutline color={"#555555"} size={"22px"} />,
     },
   ];
 
@@ -87,7 +77,7 @@ const Sidebar = () => {
         })}
 
         <div className="flex absolute bottom-4 items-center md:justify-start justify-center gap-2 md:w-[90%] w-[70%] rounded-lg hover:bg-orange-300 px-2 py-3 cursor-pointer bg-gray-200">
-          <LogOutOutline />
+          <IoLogOutOutline />
           <span className="font-medium text-sm md:block hidden">Log Out</span>
         </div>
       </div>
