@@ -3,6 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Board } from "../../data/Board";
 import { IoAddOutline } from "react-icons/io5";
 import Task from "../../components/Task/Task";
+import AddModal from "../../components/Modals/AddModal";
 
 const Boards = () => {
   const [columns, setColumns] = useState(Board);
@@ -58,7 +59,10 @@ const Boards = () => {
                 )}
               </Droppable>
 
-              <div className="flex cursor-pointer items-center justify-center gap-1 py-3 md:w-[90%] w-full opacity-90 bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm">
+              <div
+                onClick={() => openModal(columnId)}
+                className="flex cursor-pointer items-center justify-center gap-1 py-3 md:w-[90%] w-full opacity-90 bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm"
+              >
                 <IoAddOutline color={"#555555"} />
                 Add Task
               </div>
@@ -66,6 +70,13 @@ const Boards = () => {
           ))}
         </div>
       </DragDropContext>
+
+      <AddModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        setOpen={setModalOpen}
+        handleAddTask={handleAddTask}
+      />
     </div>
   );
 };
