@@ -4,6 +4,7 @@ import { Board } from "../../data/Board";
 import { IoAddOutline } from "react-icons/io5";
 import Task from "../../components/Task/Task";
 import AddModal from "../../components/Modals/AddModal";
+import { onDragEnd } from "../../helpers/onDragEnd";
 
 const Boards = () => {
   const [columns, setColumns] = useState(Board);
@@ -26,7 +27,9 @@ const Boards = () => {
 
   return (
     <div>
-      <DragDropContext onDragEnd={(result) => console.log(result)}>
+      <DragDropContext
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+      >
         <div className="w-full flex items-start justify-between px-5 pb-8 md:gap-0 gap-10">
           {Object.entries(columns).map(([columnId, column]) => (
             <div key={columnId} className="w-full flex flex-col">
