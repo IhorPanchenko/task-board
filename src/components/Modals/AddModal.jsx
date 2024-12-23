@@ -135,7 +135,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
 
         <div className="w-full flex items-center gap-4 justify-between">
           <input
-            type="number"
+            type="text"
             name="alt"
             value={taskData.alt}
             onChange={handleChange}

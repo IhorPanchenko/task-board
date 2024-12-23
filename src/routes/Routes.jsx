@@ -1,5 +1,5 @@
 import Layout from "../layout/Layout";
-import Boards from "../pages/boards/Boards";
+import Home from "../pages/boards/Home";
 
 const Routes = [
   {
@@ -8,7 +8,7 @@ const Routes = [
     children: [
       {
         path: "",
-        element: <Boards />,
+        element: <Home />,
       },
     ],
   },
