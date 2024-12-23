@@ -65,7 +65,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
         onClick={closeModal}
       ></div>
 
-      <div className="md:w-[30vw] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
+      <div className="lg:w-[40%] md:w-[60%] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
         <input
           type="text"
           name="title"
@@ -90,7 +90,9 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           onChange={handleChange}
           value={taskData.priority}
         >
-          <option value="">Priority</option>
+          <option value="" disabled>
+            Priority
+          </option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
@@ -133,7 +135,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           ))}
         </div>
 
-        <div className="w-full flex items-center gap-4 justify-between">
+        <div className="w-full flex sm:flex-row flex-col items-center gap-4 justify-between">
           <input
             type="text"
             name="alt"
@@ -143,12 +145,15 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
             className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm"
           />
 
-          <input
-            type="file"
-            name="image"
-            onChange={handleImageChange}
-            className="w-full"
-          />
+          <label className="w-full h-12 px-3 flex items-center justify-center bg-slate-100 border border-slate-300 rounded-md text-sm font-medium text-slate-600 cursor-pointer">
+            Upload Image
+            <input
+              type="file"
+              name="image"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+          </label>
         </div>
 
         <button

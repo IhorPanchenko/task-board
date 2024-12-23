@@ -63,7 +63,7 @@ const Home = () => {
 
               <div
                 onClick={() => openModal(columnId)}
-                className="flex cursor-pointer items-center justify-center gap-1 py-3 w-full bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm"
+                className="flex cursor-pointer items-center justify-center gap-1 py-3 md:w-72 w-64 bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm"
               >
                 <IoAddOutline color={"#555555"} />
                 Add Task

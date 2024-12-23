@@ -10,7 +10,11 @@ const Task = ({ task, provided }) => {
       className="w-full cursor-grab bg-white flex flex-col justify-between gap-3 items-start shadow-sm rounded-xl px-3 py-4"
     >
       {image && alt && (
-        <img src={image} alt={alt} className="w-full h-44 rounded-lg" />
+        <img
+          src={image}
+          alt={alt}
+          className="w-full h-44 rounded-lg object-cover"
+        />
       )}
       <div className="flex items-center gap-2">
         {tags.map((tag) => {
