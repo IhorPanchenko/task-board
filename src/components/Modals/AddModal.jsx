@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { getRandomColors } from "../../helpers/getRandomColors";
 
@@ -16,43 +16,60 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
 
   const [taskData, setTaskData] = useState(initialTaskData);
   const [tagTitle, setTagTitle] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setTaskData(initialTaskData);
+    }
+  }, [isOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTaskData({ ...taskData, [name]: value });
+    setTaskData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
+      const file = e.target.files[0];
+
       reader.onload = function (e) {
         if (e.target) {
-          setTaskData({ ...taskData, image: e.target.result });
+          setTaskData((prevTaskData) => ({
+            ...prevTaskData,
+            image: e.target.result,
+          }));
         }
       };
+
       reader.readAsDataURL(e.target.files[0]);
+      setSelectedImage(file.name);
     }
   };
 
-  const handleAddTag = () => {
+  const handleAddTag = useCallback(() => {
     if (tagTitle.trim() !== "") {
       const { bg, text } = getRandomColors();
       const newTag = { title: tagTitle.trim(), bg, text };
       setTaskData({ ...taskData, tags: [...taskData.tags, newTag] });
       setTagTitle("");
     }
-  };
+  }, [tagTitle]);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setOpen(false);
     onClose();
-    setTaskData(initialTaskData);
-  };
+    setSelectedImage(null);
+  }, [setOpen, onClose]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     handleAddTask(taskData);
     closeModal();
-  };
+  }, [taskData, handleAddTask, closeModal]);
 
   return (
     <div
@@ -124,9 +141,9 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
 
         <div className="w-full">
           {taskData.tags && <span>Tags:</span>}
-          {taskData.tags.map((tag, index) => (
+          {taskData.tags.map((tag) => (
             <div
-              key={index}
+              key={tag.title}
               className="inline-block mx-1 px-2 py-[2px] text-sm font-medium rounded-md"
               style={{ backgroundColor: tag.bg, color: tag.text }}
             >
@@ -146,7 +163,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           />
 
           <label className="w-full h-12 px-3 flex items-center justify-center bg-slate-100 border border-slate-300 rounded-md text-sm font-medium text-slate-600 cursor-pointer">
-            Upload Image
+            Select Image
             <input
               type="file"
               name="image"
@@ -154,6 +171,12 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
               className="hidden"
             />
           </label>
+
+          {selectedImage && (
+            <div className="w-full text-sm text-slate-600 mt-2">
+              <p>Selected Image: {selectedImage}</p>
+            </div>
+          )}
         </div>
 
         <button
