@@ -6,6 +6,15 @@ import Task from "../../components/Task/Task";
 import AddModal from "../../components/Modals/AddModal";
 import { onDragEnd } from "../../helpers/onDragEnd";
 
+const handleAddTask = (taskData, columns, setColumns, selectedColumn) => {
+  const updatedColumns = { ...columns };
+  updatedColumns[selectedColumn].items = [
+    ...updatedColumns[selectedColumn].items,
+    taskData,
+  ];
+  setColumns(updatedColumns);
+};
+
 const Home = () => {
   const [columns, setColumns] = useState(Board);
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,11 +27,6 @@ const Home = () => {
 
   const closeModal = () => {
     setModalOpen(false);
-  };
-
-  const handleAddTask = (taskData) => {
-    const newBoard = { ...columns };
-    newBoard[selectedColumn].items.push(taskData);
   };
 
   return (
@@ -49,11 +53,7 @@ const Home = () => {
                         draggableId={task.id.toString()}
                         index={index}
                       >
-                        {(provided) => (
-                          <>
-                            <Task provided={provided} task={task} />
-                          </>
-                        )}
+                        {(provided) => <Task provided={provided} task={task} />}
                       </Draggable>
                     ))}
                     {provided.placeholder}
@@ -77,7 +77,9 @@ const Home = () => {
         isOpen={modalOpen}
         onClose={closeModal}
         setOpen={setModalOpen}
-        handleAddTask={handleAddTask}
+        handleAddTask={(taskData) =>
+          handleAddTask(taskData, columns, setColumns, selectedColumn)
+        }
       />
     </>
   );

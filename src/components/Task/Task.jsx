@@ -39,9 +39,7 @@ const Task = ({ task, provided }) => {
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
           <IoTimeOutline color={"#666666"} size={"19px"} />
-          <span className="text-sm text-gray-700">
-            {typeof deadline === "number" ? deadline : "N/A"} mins
-          </span>
+          <span className="text-sm text-gray-700">{deadline} mins</span>
         </div>
 
         <div

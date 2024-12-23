@@ -9,7 +9,7 @@ import {
 
 const Navbar = () => {
   return (
-    <div className="md:w-[calc(100%-230px)] w-[calc(100%-60px)] gap-2 fixed flex items-center justify-between pl-2 pr-6 h-20 top-0 md:left-[230px] left-16 border-b border-slate-300 bg-white">
+    <nav className="md:w-[calc(100%-230px)] w-[calc(100%-60px)] gap-2 fixed flex items-center justify-between pl-2 pr-6 h-20 top-0 md:left-[230px] left-16 border-b border-slate-300 bg-white">
       {/* User Section */}
       <div className="flex items-center gap-3 cursor-pointer">
         <IoPersonOutline color="#fb923c" size="1.75rem" />
@@ -45,7 +45,7 @@ const Navbar = () => {
           </button>
         ))}
       </div>
-    </div>
+    </nav>
   );
 };
 
