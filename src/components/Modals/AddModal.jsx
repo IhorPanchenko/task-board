@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { v4 } from "uuid";
-import { getRandomColors } from "../../helpers/getRandomColors";
+import { getRandomColor } from "../../helpers/getRandomColor";
 
 const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
   const initialTaskData = {
@@ -53,7 +53,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
 
   const handleAddTag = useCallback(() => {
     if (tagTitle.trim() !== "") {
-      const { bg, text } = getRandomColors();
+      const { bg, text } = getRandomColor();
       const newTag = { title: tagTitle.trim(), bg, text };
       setTaskData({ ...taskData, tags: [...taskData.tags, newTag] });
       setTagTitle("");

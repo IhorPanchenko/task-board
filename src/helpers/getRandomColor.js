@@ -9,8 +9,9 @@ const colors = {
   amber: { bg: "#fef3c7", text: "#d97706" },
 };
 
-export const getRandomColors = () => {
-  const keys = Object.keys(colors);
-  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+const colorKeys = Object.keys(colors);
+
+export const getRandomColor = () => {
+  const randomKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
   return colors[randomKey];
 };

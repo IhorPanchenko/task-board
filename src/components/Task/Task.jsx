@@ -2,6 +2,7 @@ import { IoTimeOutline } from "react-icons/io5";
 
 const Task = ({ task, provided }) => {
   const { title, description, priority, deadline, image, alt, tags } = task;
+
   return (
     <div
       ref={provided.innerRef}
@@ -12,10 +13,11 @@ const Task = ({ task, provided }) => {
       {image && alt && (
         <img
           src={image}
-          alt={alt}
+          alt={alt || "Task image"}
           className="w-full h-44 rounded-lg object-cover"
         />
       )}
+
       <div className="flex items-center gap-2">
         {tags.map((tag) => {
           <span
@@ -33,10 +35,13 @@ const Task = ({ task, provided }) => {
       </div>
 
       <div className="w-full border border-dashed"></div>
+
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
           <IoTimeOutline color={"#666666"} size={"19px"} />
-          <span className="text-sm text-gray-700">{deadline} mins</span>
+          <span className="text-sm text-gray-700">
+            {typeof deadline === "number" ? deadline : "N/A"} mins
+          </span>
         </div>
 
         <div

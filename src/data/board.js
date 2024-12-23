@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { getRandomColors } from "../helpers/getRandomColors";
+import { getRandomColor } from "../helpers/getRandomColor";
 import { getRandomImage } from "../helpers/getRandomImage";
 
 export const Board = {
@@ -15,8 +15,8 @@ export const Board = {
         image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
       {
@@ -26,8 +26,8 @@ export const Board = {
         priority: "low",
         deadline: 50,
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
     ],
@@ -42,8 +42,8 @@ export const Board = {
         priority: "high",
         deadline: 50,
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
       {
@@ -55,8 +55,8 @@ export const Board = {
         image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
     ],
@@ -73,8 +73,8 @@ export const Board = {
         image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
     ],
@@ -89,8 +89,8 @@ export const Board = {
         priority: "low",
         deadline: 50,
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
       {
@@ -100,8 +100,8 @@ export const Board = {
         priority: "medium",
         deadline: 50,
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
     ],
@@ -118,8 +118,8 @@ export const Board = {
         image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
-          { title: "Test", ...getRandomColors() },
-          { title: "Front", ...getRandomColors() },
+          { title: "Test", ...getRandomColor() },
+          { title: "Front", ...getRandomColor() },
         ],
       },
     ],
