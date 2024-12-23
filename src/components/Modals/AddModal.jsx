@@ -77,19 +77,23 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
         isOpen ? "grid" : "hidden"
       }`}
     >
+      {/* Overlay */}
       <div
         className="w-full h-full bg-black opacity-70 absolute left-0 top-0 z-20"
         onClick={closeModal}
       ></div>
 
-      <div className="lg:w-[40%] md:w-[60%] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
+      {/* Modal Content */}
+      <div className="lg:w-[40%] md:w-[60%] w-[90%] bg-white rounded-lg shadow-lg z-30 flex flex-col items-center gap-6 px-6 py-8">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Add Task</h2>
+
         <input
           type="text"
           name="title"
           value={taskData.title}
           onChange={handleChange}
           placeholder="Title"
-          className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm font-medium"
+          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-orange-400"
         />
 
         <input
@@ -98,14 +102,14 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           value={taskData.description}
           onChange={handleChange}
           placeholder="Description"
-          className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm font-medium"
+          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-orange-400"
         />
 
         <select
           name="priority"
-          className="w-full h-12 px-2 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm"
-          onChange={handleChange}
           value={taskData.priority}
+          onChange={handleChange}
+          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm focus:ring-2 focus:ring-orange-400"
         >
           <option value="" disabled>
             Priority
@@ -115,54 +119,69 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           <option value="high">High</option>
         </select>
 
-        <input
-          type="number"
+        <select
           name="deadline"
-          value={taskData.deadline}
+          value={taskData.deadline || ""}
           onChange={handleChange}
-          placeholder="Deadline"
-          className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm font-medium"
-        />
+          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-orange-400"
+        >
+          <option value="" disabled>
+            Select Deadline
+          </option>
+          <option value="15">15 mins</option>
+          <option value="30">30 mins</option>
+          <option value="45">45 mins</option>
+          <option value="60">1 hour</option>
+          <option value="90">1.5 hours</option>
+          <option value="120">2 hours</option>
+          <option value="180">3 hours</option>
+        </select>
 
         <input
           type="text"
           value={tagTitle}
           onChange={(e) => setTagTitle(e.target.value)}
           placeholder="Tag Title"
-          className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm font-medium"
+          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-orange-400"
         />
 
         <button
-          className="w-full rounded-md h-9 bg-slate-500 text-amber-50 font-medium"
+          className="w-full rounded-md h-9 bg-orange-400 text-white font-medium mt-2"
           onClick={handleAddTag}
         >
           Add Tag
         </button>
 
+        {/* Tags Display */}
         <div className="w-full">
-          {taskData.tags && <span>Tags:</span>}
-          {taskData.tags.map((tag) => (
-            <div
-              key={tag.title}
-              className="inline-block mx-1 px-2 py-[2px] text-sm font-medium rounded-md"
-              style={{ backgroundColor: tag.bg, color: tag.text }}
-            >
-              {tag.title}
+          {taskData.tags && taskData.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              <span className="text-sm font-medium">Tags:</span>
+              {taskData.tags.map((tag) => (
+                <div
+                  key={tag.title}
+                  className="inline-block px-3 py-1 text-sm font-medium rounded-md"
+                  style={{ backgroundColor: tag.bg, color: tag.text }}
+                >
+                  {tag.title}
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
 
-        <div className="w-full flex sm:flex-row flex-col items-center gap-4 justify-between">
+        {/* Alt Text and Image Selection */}
+        <div className="w-full flex sm:flex-row flex-col gap-4">
           <input
             type="text"
             name="alt"
             value={taskData.alt}
             onChange={handleChange}
             placeholder="Image Alt"
-            className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm"
+            className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-orange-400"
           />
 
-          <label className="w-full h-12 px-3 flex items-center justify-center bg-slate-100 border border-slate-300 rounded-md text-sm font-medium text-slate-600 cursor-pointer">
+          <label className="w-full h-12 px-4 flex items-center justify-center bg-gray-100 border border-gray-300 rounded-md text-sm font-medium text-gray-600 cursor-pointer">
             Select Image
             <input
               type="file"
@@ -173,15 +192,16 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           </label>
 
           {selectedImage && (
-            <div className="w-full text-sm text-slate-600 mt-2">
+            <div className="w-full text-sm text-gray-600 mt-2">
               <p>Selected Image: {selectedImage}</p>
             </div>
           )}
         </div>
 
+        {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          className="w-full mt-3 rounded-md h-9 bg-orange-400 text-blue-50 font-medium"
+          className="w-full mt-4 rounded-md h-9 bg-orange-400 text-blue-50 font-medium"
         >
           Submit Task
         </button>

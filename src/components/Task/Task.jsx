@@ -1,4 +1,5 @@
 import { IoTimeOutline } from "react-icons/io5";
+import { formatDeadline } from "../../helpers/formatDeadline";
 
 const Task = ({ task, provided }) => {
   const { title, description, priority, deadline, image, alt, tags } = task;
@@ -43,7 +44,9 @@ const Task = ({ task, provided }) => {
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
           <IoTimeOutline color="#666666" size="19px" />
-          <span className="text-sm text-gray-700">{deadline} mins</span>
+          <span className="text-sm text-gray-700">
+            {formatDeadline(deadline)}
+          </span>
         </div>
 
         {/* Priority Indicator */}
