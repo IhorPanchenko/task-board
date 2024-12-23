@@ -34,9 +34,9 @@ const Home = () => {
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
-        <div className="w-full flex items-start justify-between px-5 pb-8 gap-8">
+        <div className="flex w-full gap-8 px-5 pb-8">
           {Object.entries(columns).map(([columnId, column]) => (
-            <div className="w-full flex flex-col gap-0" key={columnId}>
+            <div className="flex flex-col w-full gap-3" key={columnId}>
               <Droppable droppableId={columnId} key={columnId}>
                 {(provided) => (
                   <div
@@ -44,7 +44,7 @@ const Home = () => {
                     {...provided.droppableProps}
                     className="flex flex-col md:w-72 w-64 gap-3 items-center py-5"
                   >
-                    <div className="flex items-center justify-center py-3 w-full bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm">
+                    <div className="flex items-center justify-center w-full py-3 bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm">
                       {column.name}
                     </div>
                     {column.items.map((task, index) => (
@@ -63,7 +63,7 @@ const Home = () => {
 
               <div
                 onClick={() => openModal(columnId)}
-                className="flex cursor-pointer items-center justify-center gap-1 py-3 md:w-72 w-64 bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm"
+                className="flex cursor-pointer items-center justify-center gap-1 py-3 w-full bg-white rounded-lg shadow-sm text-[#555555] font-medium text-sm hover:bg-gray-100 transition-colors"
               >
                 <IoAddOutline color={"#555555"} />
                 Add Task

@@ -38,7 +38,7 @@ const Navbar = () => {
         ].map(({ icon: Icon, label }) => (
           <button
             key={label}
-            className="grid place-items-center bg-gray-100 rounded-full p-2 cursor-pointer"
+            className="grid place-items-center bg-gray-100 rounded-full p-2 cursor-pointer hover:bg-gray-200 transition-colors"
             aria-label={label}
           >
             <Icon color="#444444" />

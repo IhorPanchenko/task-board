@@ -18,30 +18,35 @@ const Task = ({ task, provided }) => {
         />
       )}
 
-      <div className="flex items-center gap-2">
-        {tags.map((tag) => {
-          <span
-            key={tag.title}
-            className="px-3 py-1 text-sm font-medium rounded-md"
-          >
-            {tag.title}
-          </span>;
-        })}
-      </div>
-
+      {/* Title and Description */}
       <div className="w-full flex items-start flex-col">
         <span className="text-sm font-medium text-[#555555]">{title}</span>
         <span className="text-sm text-gray-500">{description}</span>
       </div>
 
+      {/* Tags Section */}
+      <div className="flex items-center gap-2">
+        {tags.map((tag) => (
+          <span
+            key={tag.title}
+            className="px-3 py-[2px] text-[13px] font-medium rounded-md"
+            style={{ backgroundColor: tag.bg, color: tag.text }}
+          >
+            {tag.title}
+          </span>
+        ))}
+      </div>
+
       <div className="w-full border border-dashed"></div>
 
+      {/* Deadline and Priority */}
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <IoTimeOutline color={"#666666"} size={"19px"} />
+          <IoTimeOutline color="#666666" size="19px" />
           <span className="text-sm text-gray-700">{deadline} mins</span>
         </div>
 
+        {/* Priority Indicator */}
         <div
           className={`w-16 rounded-full h-1 ${
             priority === "high"
