@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
-import taskImage from "../assets/images/bg.jpg";
 import { getRandomColors } from "../helpers/getRandomColors";
+import { getRandomImage } from "../helpers/getRandomImage";
 
 export const Board = {
   backlog: {
@@ -12,7 +12,7 @@ export const Board = {
         description: "Lorem ipsum dolor sit amet ..",
         priority: "medium",
         deadline: 50,
-        image: taskImage,
+        image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
           { title: "Test", ...getRandomColors() },
@@ -52,7 +52,7 @@ export const Board = {
         description: "Lorem ipsum dolor sit amet ..",
         priority: "low",
         deadline: 50,
-        image: taskImage,
+        image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
           { title: "Test", ...getRandomColors() },
@@ -70,7 +70,7 @@ export const Board = {
         description: "Lorem ipsum dolor sit amet ..",
         priority: "medium",
         deadline: 50,
-        image: taskImage,
+        image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
           { title: "Test", ...getRandomColors() },
@@ -115,7 +115,7 @@ export const Board = {
         description: "Lorem ipsum dolor sit amet ..",
         priority: "high",
         deadline: 50,
-        image: taskImage,
+        image: getRandomImage(200, 300, v4()),
         alt: "task image",
         tags: [
           { title: "Test", ...getRandomColors() },
