@@ -109,7 +109,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
           name="priority"
           value={taskData.priority}
           onChange={handleChange}
-          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm focus:ring-2 focus:ring-orange-400"
+          className="w-full h-12 px-4 outline-none rounded-md bg-gray-100 border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-orange-400"
         >
           <option value="" disabled>
             Priority
@@ -146,7 +146,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
         />
 
         <button
-          className="w-full rounded-md h-9 bg-orange-400 text-white font-medium mt-2"
+          className="w-full rounded-md h-12 bg-orange-400 text-white font-medium mt-2"
           onClick={handleAddTag}
         >
           Add Tag
@@ -201,7 +201,7 @@ const AddModal = ({ isOpen, onClose, setOpen, handleAddTask }) => {
         {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          className="w-full mt-4 rounded-md h-9 bg-orange-400 text-blue-50 font-medium"
+          className="w-full mt-4 rounded-md h-12 bg-orange-400 text-blue-50 font-medium"
         >
           Submit Task
         </button>
