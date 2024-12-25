@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
+import { IoCloseOutline } from "react-icons/io5";
 import { v4 as uuidv4 } from "uuid";
 import boardsSlice from "../../redux/boardsSlice";
 
@@ -78,7 +78,7 @@ const AddEditBoardModal = ({ setBoardModalOpen, type }) => {
           <input
             className="bg-transparent px-4 py-2 rounded-md text-sm border 
           border-gray-600 outline-none focus:outline-[#635fc7] outline-1 ring-0"
-            placeholder=" e.g Web Design"
+            placeholder="e.g Web Design"
             value={name}
             onChange={(e) => setName(e.target.value)}
             id="board-name-input"

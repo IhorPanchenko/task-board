@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   IoChevronDownOutline,
   IoChevronUpOutline,
@@ -7,10 +8,17 @@ import {
 import logo from "../../assets/logo.svg";
 import HeaderDropdown from "./HeaderDropdown";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
+import AddEditTaskModal from "../modals/AddEditTaskModal";
 
 const Header = ({ boardModalOpen, setBoardModalOpen }) => {
+  const dispatch = useDispatch();
+
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [openAddEditTask, setOpenAddEditTask] = useState(false);
   const [boardType, setBoardType] = useState("add");
+
+  const boards = useSelector((state) => state.boards);
+  const board = boards.find((board) => board.isActive);
 
   return (
     <>
@@ -62,7 +70,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
 
             <div className="flex items-center">
               <h3 className="truncate max-w-48 md:text-2xl text-xl font-bold md:ml-20">
-                Board Name
+                {board.name}
               </h3>
 
               <div
@@ -79,9 +87,23 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
           </div>
 
           <div className="flex space-x-4 items-center md:space-x-6">
-            <button className="hidden md:block button">+ Add New Task</button>
+            <button
+              onClick={() => {
+                setOpenAddEditTask((state) => !state);
+              }}
+              className="hidden md:block button"
+            >
+              + Add New Task
+            </button>
 
-            <button className="button py-1 px-3 md:hidden">+</button>
+            <button
+              onClick={() => {
+                setOpenAddEditTask((state) => !state);
+              }}
+              className="button py-1 px-3 md:hidden"
+            >
+              +
+            </button>
 
             <IoEllipsisVertical className="w-6 h-6 text-gray-500 cursor-pointer" />
           </div>
@@ -98,6 +120,14 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
           <AddEditBoardModal
             type={boardType}
             setBoardModalOpen={setBoardModalOpen}
+          />
+        )}
+
+        {openAddEditTask && (
+          <AddEditTaskModal
+            type="add"
+            device="mobile"
+            setOpenAddEditTask={setOpenAddEditTask}
           />
         )}
       </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch } from "@headlessui/react";
 import {
   IoLayersOutline,
@@ -7,8 +7,10 @@ import {
   IoSunnyOutline,
 } from "react-icons/io5";
 import useDarkMode from "../../Hooks/useDarkMode";
+import boardsSlice from "../../redux/boardsSlice";
 
 function HeaderDropdown({ setOpenDropdown, setBoardModalOpen }) {
+  const dispatch = useDispatch();
   const [colorTheme, setColorTheme] = useDarkMode();
   const [darkSide, setDarkSide] = useState(
     colorTheme === "light" ? true : false
@@ -36,13 +38,18 @@ function HeaderDropdown({ setOpenDropdown, setBoardModalOpen }) {
           All Boards {boards?.length}
         </h3>
 
-        <div className="">
-          {boards.map((board) => (
+        <div>
+          {boards.map((board, index) => (
             <div
-              className={`flex items-center dark:text-white space-x-2 px-5 py-4 ${
-                board.isActive && "bg-[#635fc7] rounded-r-full text-white mr-8"
-              }`}
+              className={`flex items-center dark:text-white space-x-2 px-5 py-4 cursor-pointer
+                 ${
+                   board.isActive &&
+                   "bg-[#635fc7] rounded-r-full text-white mr-8"
+                 }`}
               key={board.name}
+              onClick={() => {
+                dispatch(boardsSlice.actions.setBoardActive({ index }));
+              }}
             >
               <IoLayersOutline className="h-4 text-gray-600" />
               <span className="text-lg font-bold">{board.name}</span>
