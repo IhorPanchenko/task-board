@@ -1,21 +1,16 @@
+import { useState } from "react";
 import {
   IoChevronDownOutline,
-  IoNotificationsOutline,
-  IoPersonOutline,
-  IoSearchOutline,
-  IoSettingsOutline,
-  IoShareSocialOutline,
-  IoAlbumsOutline,
   IoChevronUpOutline,
   IoEllipsisVertical,
 } from "react-icons/io5";
-
 import logo from "../../assets/logo.svg";
-import { useState } from "react";
 import HeaderDropdown from "./HeaderDropdown";
+import AddEditBoardModal from "../modals/AddEditBoardModal";
 
-const Header = () => {
+const Header = ({ boardModalOpen, setBoardModalOpen }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [boardType, setBoardType] = useState("add");
 
   return (
     <>
@@ -92,7 +87,19 @@ const Header = () => {
           </div>
         </header>
 
-        {openDropdown && <HeaderDropdown setOpenDropdown={setOpenDropdown} />}
+        {openDropdown && (
+          <HeaderDropdown
+            setOpenDropdown={setOpenDropdown}
+            setBoardModalOpen={setBoardModalOpen}
+          />
+        )}
+
+        {boardModalOpen && (
+          <AddEditBoardModal
+            type={boardType}
+            setBoardModalOpen={setBoardModalOpen}
+          />
+        )}
       </div>
     </>
   );

@@ -8,7 +8,7 @@ import {
 } from "react-icons/io5";
 import useDarkMode from "../../Hooks/useDarkMode";
 
-function HeaderDropdown({ setOpenDropdown }) {
+function HeaderDropdown({ setOpenDropdown, setBoardModalOpen }) {
   const [colorTheme, setColorTheme] = useDarkMode();
   const [darkSide, setDarkSide] = useState(
     colorTheme === "light" ? true : false
@@ -23,7 +23,7 @@ function HeaderDropdown({ setOpenDropdown }) {
 
   return (
     <div
-      className="py-10 px-6 absolute left-0 right-0 bottom-[-100vh] top-16 bg-gray-600"
+      className="py-10 px-6 absolute left-0 right-0 bottom-[-100vh] top-16 bg-[#00000080]"
       onClick={(e) => {
         if (e.target !== e.currentTarget) {
           return;
@@ -49,7 +49,13 @@ function HeaderDropdown({ setOpenDropdown }) {
             </div>
           ))}
 
-          <div className="flex items-center space-x-2 text-[#635fc7] px-5 py-4">
+          <div
+            onClick={() => {
+              setBoardModalOpen(true);
+              setOpenDropdown(false);
+            }}
+            className="flex items-center space-x-2 text-[#635fc7] px-5 py-4 cursor-pointer"
+          >
             <IoLayersOutline className="h-4 text-gray-600" />
             <span className="text-lg font-bold">Create New Board</span>
           </div>
