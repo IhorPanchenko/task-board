@@ -12,6 +12,7 @@ import {
 
 import logo from "../../assets/logo.svg";
 import { useState } from "react";
+import HeaderDropdown from "./HeaderDropdown";
 
 const Header = () => {
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -83,13 +84,15 @@ const Header = () => {
           </div>
 
           <div className="flex space-x-4 items-center md:space-x-6">
-            <button className="button">+ Add New Task</button>
+            <button className="hidden md:block button">+ Add New Task</button>
 
             <button className="button py-1 px-3 md:hidden">+</button>
 
             <IoEllipsisVertical className="w-6 h-6 text-gray-500 cursor-pointer" />
           </div>
         </header>
+
+        {openDropdown && <HeaderDropdown setOpenDropdown={setOpenDropdown} />}
       </div>
     </>
   );
