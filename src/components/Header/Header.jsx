@@ -9,16 +9,42 @@ import logo from "../../assets/logo.svg";
 import HeaderDropdown from "./HeaderDropdown";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
 import AddEditTaskModal from "../modals/AddEditTaskModal";
+import ElipsisMenu from "./ElipsisMenu";
+import DeleteBoardModal from "../modals/DeleteBoardModal";
+import boardsSlice from "../../redux/boardsSlice";
 
 const Header = ({ boardModalOpen, setBoardModalOpen }) => {
   const dispatch = useDispatch();
 
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [openAddEditTask, setOpenAddEditTask] = useState(false);
+  const [isElipsisOpen, setIsElipsisOpen] = useState(false);
   const [boardType, setBoardType] = useState("add");
 
   const boards = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive);
+
+  const setOpenEditModal = () => {
+    setBoardModalOpen(true);
+    setIsElipsisOpen(false);
+  };
+
+  const setOpenDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+    setIsElipsisOpen(false);
+  };
+
+  const onDeleteBtnClick = () => {
+    dispatch(boardsSlice.actions.deleteBoard());
+    dispatch(boardsSlice.actions.setBoardActive({ index: 0 }));
+    setIsDeleteModalOpen(false);
+  };
+  const onDropdownClick = () => {
+    setOpenDropdown((state) => !state);
+    setIsElipsisOpen(false);
+    setBoardType("add");
+  };
 
   return (
     <>
@@ -74,7 +100,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
               </h3>
 
               <div
-                onClick={() => setOpenDropdown((state) => !state)}
+                onClick={onDropdownClick}
                 className="w-3 ml-2 md:hidden cursor-pointer"
               >
                 {openDropdown ? (
@@ -105,7 +131,22 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
               +
             </button>
 
-            <IoEllipsisVertical className="w-6 h-6 text-gray-500 cursor-pointer" />
+            <IoEllipsisVertical
+              onClick={() => {
+                setBoardType("edit");
+                setOpenDropdown(false);
+                setIsElipsisOpen((state) => !state);
+              }}
+              className="w-6 h-6 text-gray-500 cursor-pointer"
+            />
+
+            {isElipsisOpen && (
+              <ElipsisMenu
+                type="Boards"
+                setOpenEditModal={setOpenEditModal}
+                setOpenDeleteModal={setOpenDeleteModal}
+              />
+            )}
           </div>
         </header>
 
@@ -128,6 +169,15 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
             type="add"
             device="mobile"
             setOpenAddEditTask={setOpenAddEditTask}
+          />
+        )}
+
+        {isDeleteModalOpen && (
+          <DeleteBoardModal
+            type="board"
+            title={board.name}
+            onDeleteBtnClick={onDeleteBtnClick}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
           />
         )}
       </div>
