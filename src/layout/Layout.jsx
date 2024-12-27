@@ -25,9 +25,9 @@ const Layout = () => {
             setBoardModalOpen={setBoardModalOpen}
           />
           <Sidebar />
-          {/* <div className="md:pl-64 pl-16 pr-5 pt-20 w-full h-full overflow-y-auto">
+          <div>
             <Outlet />
-          </div> */}
+          </div>
         </>
       ) : (
         <EmptyBoard type="add" />
@@ -35,5 +35,7 @@ const Layout = () => {
     </div>
   );
 };
+
+// className="md:pl-64 pl-16 pr-5 pt-20 w-full h-full overflow-y-auto"
 
 export default Layout;

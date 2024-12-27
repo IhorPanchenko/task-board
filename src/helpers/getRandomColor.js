@@ -1,17 +1,16 @@
-const colors = {
-  red: { bg: "#fee2e2", text: "#dc2626" },
-  rose: { bg: "#ffe4e6", text: "#e11d48" },
-  blue: { bg: "#dbeafe", text: "#2563eb" },
-  green: { bg: "#d1fae5", text: "#059669" },
-  indigo: { bg: "#e0e7ff", text: "#4f46e5" },
-  cyan: { bg: "#cffafe", text: "#0891b2" },
-  lime: { bg: "#ecfccb", text: "#65a30d" },
-  amber: { bg: "#fef3c7", text: "#d97706" },
-};
+const colors = [
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-blue-500",
+  "bg-purple-500",
+  "bg-green-500",
+  "bg-indigo-500",
+  "bg-yellow-500",
+  "bg-pink-500",
+  "bg-sky-500",
+];
 
-const colorKeys = Object.keys(colors);
-
-export const getRandomColor = () => {
-  const randomKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
-  return colors[randomKey];
-};
+export function getRandomColor() {
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}
