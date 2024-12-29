@@ -7,24 +7,26 @@ import boardsSlice from "../../redux/boardsSlice";
 const AddEditTaskModal = ({
   type,
   device,
-  setOpenAddEditTask,
+  setIsAddTaskModalOpen,
+  setIsTaskModalOpen,
   taskIndex,
   prevColIndex = 0,
 }) => {
   const dispatch = useDispatch();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [isValid, setIsValid] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [isValid, setIsValid] = useState(true);
 
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive
   );
 
   const columns = board.columns;
-  const column = columns.find((column, index) => index === prevColIndex);
+  const col = columns.find((col, index) => index === prevColIndex);
+  const task = col ? col.tasks.find((task, index) => index === taskIndex) : [];
   const [status, setStatus] = useState(columns[prevColIndex].name);
   const [newColIndex, setNewColIndex] = useState(prevColIndex);
-
   const [subtasks, setSubtasks] = useState([
     { title: "", isCompleted: false, id: uuidv4() },
     { title: "", isCompleted: false, id: uuidv4() },
@@ -64,6 +66,17 @@ const AddEditTaskModal = ({
     return true;
   };
 
+  if (type === "edit" && isFirstLoad) {
+    setSubtasks(
+      task.subtasks.map((subtask) => {
+        return { ...subtask, id: uuidv4() };
+      })
+    );
+    setTitle(task.title);
+    setDescription(task.description);
+    setIsFirstLoad(false);
+  }
+
   const onSubmit = (type) => {
     if (type === "add") {
       dispatch(
@@ -96,7 +109,7 @@ const AddEditTaskModal = ({
         if (e.target !== e.currentTarget) {
           return;
         }
-        setOpenAddEditTask(false);
+        setIsAddTaskModalOpen(false);
       }}
       className={
         device === "mobile"
@@ -204,7 +217,7 @@ const AddEditTaskModal = ({
               const isValid = validate();
               if (isValid) {
                 onSubmit(type);
-                setOpenAddEditTask(false);
+                setIsAddTaskModalOpen(false);
               }
             }}
             className="w-full items-center text-white bg-[#635fc7] py-2 rounded-full"

@@ -11,7 +11,7 @@ const Task = ({ taskIndex, colIndex }) => {
   const boards = useSelector((state) => state.boards);
   const board = boards.find((board) => board.isActive === true);
   const columns = board.columns;
-  const col = columns.find((col, i) => i === colIndex);
+  const col = columns.find((column, i) => i === colIndex);
   const task = col.tasks.find((task, i) => i === taskIndex);
 
   let completed = 0;
@@ -22,6 +22,13 @@ const Task = ({ taskIndex, colIndex }) => {
       completed++;
     }
   });
+
+  const handleOnDrag = (e) => {
+    e.dataTransfer.setData(
+      "text",
+      JSON.stringify({ taskIndex, prevColIndex: colIndex })
+    );
+  };
 
   return (
     // <div
@@ -83,6 +90,8 @@ const Task = ({ taskIndex, colIndex }) => {
 
     <div>
       <div
+        onDragStart={handleOnDrag}
+        draggable
         onClick={() => {
           setIsTaskModalOpen(true);
         }}
@@ -96,7 +105,13 @@ const Task = ({ taskIndex, colIndex }) => {
           {completed} of {subtasks.length} completed tasks
         </span>
       </div>
-      {isTaskModalOpen && <TaskModal />}
+      {isTaskModalOpen && (
+        <TaskModal
+          colIndex={colIndex}
+          taskIndex={taskIndex}
+          setIsTaskModalOpen={setIsTaskModalOpen}
+        />
+      )}
     </div>
   );
 };

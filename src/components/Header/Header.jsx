@@ -9,7 +9,7 @@ import logo from "../../assets/logo.svg";
 import HeaderDropdown from "./HeaderDropdown";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
 import AddEditTaskModal from "../modals/AddEditTaskModal";
-import ElipsisMenu from "./ElipsisMenu";
+import ElipsisMenu from "../ElipsisMenu/ElipsisMenu";
 import DeleteBoardModal from "../modals/DeleteBoardModal";
 import boardsSlice from "../../redux/boardsSlice";
 
@@ -40,6 +40,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
     dispatch(boardsSlice.actions.setBoardActive({ index: 0 }));
     setIsDeleteModalOpen(false);
   };
+
   const onDropdownClick = () => {
     setOpenDropdown((state) => !state);
     setIsElipsisOpen(false);
@@ -160,7 +161,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
         {boardModalOpen && (
           <AddEditBoardModal
             type={boardType}
-            setBoardModalOpen={setBoardModalOpen}
+            setIsBoardModalOpen={setBoardModalOpen}
           />
         )}
 
@@ -168,7 +169,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
           <AddEditTaskModal
             type="add"
             device="mobile"
-            setOpenAddEditTask={setOpenAddEditTask}
+            setIsAddTaskModalOpen={setOpenAddEditTask}
           />
         )}
 

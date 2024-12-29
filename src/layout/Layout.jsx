@@ -25,9 +25,8 @@ const Layout = () => {
             setBoardModalOpen={setBoardModalOpen}
           />
           <Sidebar />
-          <div>
-            <Outlet />
-          </div>
+
+          <Outlet />
         </>
       ) : (
         <EmptyBoard type="add" />

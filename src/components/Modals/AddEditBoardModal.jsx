@@ -4,7 +4,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { v4 as uuidv4 } from "uuid";
 import boardsSlice from "../../redux/boardsSlice";
 
-const AddEditBoardModal = ({ setBoardModalOpen, type }) => {
+const AddEditBoardModal = ({ setIsBoardModalOpen, type }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -58,7 +58,7 @@ const AddEditBoardModal = ({ setBoardModalOpen, type }) => {
   };
 
   const onSubmit = (type) => {
-    setBoardModalOpen(false);
+    setIsBoardModalOpen(false);
     if (type === "add") {
       dispatch(boardsSlice.actions.addBoard({ name, newColumns }));
     } else {
@@ -72,7 +72,7 @@ const AddEditBoardModal = ({ setBoardModalOpen, type }) => {
         if (e.target !== e.currentTarget) {
           return;
         }
-        setBoardModalOpen(false);
+        setIsBoardModalOpen(false);
       }}
       className="fixed right-0 left-0 top-0 bottom-0 px-2 py-4 scrollbar-hide overflow-scroll 
       z-50 justify-center items-center flex bg-[#00000080]"

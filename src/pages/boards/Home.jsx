@@ -8,6 +8,8 @@ import AddModal from "../../components/Modals/AddModal";
 import { onDragEnd } from "../../helpers/onDragEnd";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import BoardColumn from "../../components/Board/BoardColumn";
+import EmptyBoard from "../../components/EmptyBoard/EmptyBoard";
+import AddEditBoardModal from "../../components/modals/AddEditBoardModal";
 
 const handleAddTask = (taskData, columns, setColumns, selectedColumn) => {
   const updatedColumns = { ...columns };
@@ -109,15 +111,46 @@ const Home = ({ boardModalOpen, setBoardModalOpen }) => {
     <div
       className={
         windowSize[0] >= 768 && isSideBarOpen
-          ? " bg-[#f4f7fd] scrollbar-hide h-screen flex dark:bg-[#20212c] overflow-x-scroll gap-6 ml-[261px]"
-          : "bg-[#f4f7fd] scrollbar-hide h-screen flex dark:bg-[#20212c] overflow-x-scroll gap-6 "
+          ? " bg-[#f4f7fd] scrollbar-hide h-screen flex dark:bg-[#20212c] gap-6 ml-[261px]"
+          : "bg-[#f4f7fd] scrollbar-hide h-screen flex dark:bg-[#20212c] gap-6 "
       }
     >
-      {windowSize[0] >= 768 && <Sidebar />}
+      {windowSize[0] >= 768 && (
+        <Sidebar
+          isSideBarOpen={isSideBarOpen}
+          setIsSideBarOpen={setIsSideBarOpen}
+        />
+      )}
 
-      {columns.map((col, index) => (
-        <BoardColumn key={index} colIndex={index} />
-      ))}
+      {columns.length > 0 ? (
+        <>
+          {columns.map((col, index) => (
+            <BoardColumn key={index} colIndex={index} />
+          ))}
+          <div
+            onClick={() => {
+              setIsBoardModalOpen(true);
+            }}
+            className="h-screen dark:bg-[#2b2c3740] flex justify-center items-center
+            font-bold text-2xl hover:text-[#635fc7] transition duration-300 cursor-pointer
+            bg-[#e9effa] scrollbar-hide mb-2 mx-5 pt-24 min-w-72 text-[#828fa3] mt-32
+            rounded-lg"
+          >
+            + New Column
+          </div>
+        </>
+      ) : (
+        <>
+          <EmptyBoard type="edit" />
+        </>
+      )}
+
+      {isBoardModalOpen && (
+        <AddEditBoardModal
+          type="edit"
+          setIsBoardModalOpen={setIsBoardModalOpen}
+        />
+      )}
     </div>
   );
 };
