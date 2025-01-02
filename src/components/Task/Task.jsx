@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoTimeOutline } from "react-icons/io5";
-import { formatDeadline } from "../../helpers/formatDeadline";
+
 import TaskModal from "../modals/TaskModal";
 
 const Task = ({ taskIndex, colIndex }) => {
