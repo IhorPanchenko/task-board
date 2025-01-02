@@ -1,28 +1,33 @@
 import { useState } from "react";
+
 import AddEditBoardModal from "../modals/AddEditBoardModal";
 
 const EmptyBoard = ({ type }) => {
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
 
+  const toggleModal = () => setIsBoardModalOpen(true);
+
+  const message =
+    type === "edit"
+      ? "This board is empty. Create a new column to get started."
+      : "There are no boards available. Create a new board to get started.";
+
+  const buttonText = type === "edit" ? "+ Add New Column" : "+ Add New Board";
+
   return (
     <div
-      className="bg-white dark:bg-[#2b2c37] h-screen w-screen flex flex-col items-center
-    justify-center"
+      className="flex flex-col h-screen w-screen items-center justify-center bg-white 
+    dark:bg-[#2b2c37]"
     >
-      <h3 className="text-gray-500 font-bold">
-        {type === "edit"
-          ? "This board is empty. Create a new column to get started."
-          : "There are no boards available. Create a new board to get started."}
-      </h3>
+      <h3 className="font-bold text-gray-500">{message}</h3>
 
       <button
-        onClick={() => {
-          setIsBoardModalOpen(true);
-        }}
-        className="w-full items-center max-w-xs font-bold hover:opacity-70 dark:text-white
-      dark:bg-[#635fc7] mt-8 relative text-white bg-[#635fc7] py-2 rounded-full"
+        onClick={toggleModal}
+        aria-label={buttonText}
+        className="w-full max-w-xs mt-8 relative font-bold text-white bg-[#635fc7] 
+        dark:bg-[#635fc7] dark:text-white py-2 rounded-full hover:opacity-70 items-center"
       >
-        {type === "edit" ? "+ Add New Column" : "+ Add New Board"}
+        {buttonText}
       </button>
 
       {isBoardModalOpen && (
