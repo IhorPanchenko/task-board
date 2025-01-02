@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Board } from "../../data/Board";
+
 import { IoAddOutline } from "react-icons/io5";
-import Task from "../../components/Task/Task";
-import AddModal from "../../components/Modals/AddModal";
+import Task from "../Task/Task";
+import AddModal from "../Modals/AddModal";
 import { onDragEnd } from "../../helpers/onDragEnd";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import BoardColumn from "../../components/Board/BoardColumn";
-import EmptyBoard from "../../components/EmptyBoard/EmptyBoard";
-import AddEditBoardModal from "../../components/modals/AddEditBoardModal";
+import Sidebar from "../Sidebar/Sidebar";
+import BoardColumn from "./BoardColumn";
+import EmptyBoard from "../EmptyBoard/EmptyBoard";
+import AddEditBoardModal from "../modals/AddEditBoardModal";
 
 const handleAddTask = (taskData, columns, setColumns, selectedColumn) => {
   const updatedColumns = { ...columns };
@@ -20,7 +20,7 @@ const handleAddTask = (taskData, columns, setColumns, selectedColumn) => {
   setColumns(updatedColumns);
 };
 
-const Home = ({ boardModalOpen, setBoardModalOpen }) => {
+const BoardHome = ({ boardModalOpen, setBoardModalOpen }) => {
   // const [columns, setColumns] = useState(Board);
   // const [modalOpen, setModalOpen] = useState(false);
   // const [selectedColumn, setSelectedColumn] = useState("");
@@ -155,4 +155,4 @@ const Home = ({ boardModalOpen, setBoardModalOpen }) => {
   );
 };
 
-export default Home;
+export default BoardHome;

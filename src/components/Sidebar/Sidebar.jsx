@@ -5,7 +5,6 @@ import {
   IoEyeOffOutline,
   IoEyeOutline,
 } from "react-icons/io5";
-import { navLinks } from "../../data/sidebarLinks";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import useDarkMode from "../../Hooks/useDarkMode";
