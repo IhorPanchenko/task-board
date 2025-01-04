@@ -5,10 +5,8 @@ import {
   IoChevronUpOutline,
   IoEllipsisVertical,
 } from "react-icons/io5";
-
 import logo from "../../assets/logo.svg";
 import boardsSlice from "../../redux/boardsSlice";
-
 import HeaderDropdown from "./HeaderDropdown";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
 import AddEditTaskModal from "../modals/AddEditTaskModal";
