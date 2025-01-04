@@ -44,6 +44,7 @@ const HeaderDropdown = ({ setOpenDropdown, setBoardModalOpen }) => {
         className="bg-white dark:bg-[#2b2c37] shadow-md shadow-[#364e7e1a] w-full py-4 
         rounded-xl"
       >
+        {/* Total number of boards */}
         <h3 className="text-gray-600 dark:text-gray-300 font-semibold mx-4 mb-8">
           All Boards {boards?.length}
         </h3>
@@ -63,6 +64,7 @@ const HeaderDropdown = ({ setOpenDropdown, setBoardModalOpen }) => {
             </div>
           ))}
 
+          {/* Option to create a new board */}
           <div
             onClick={handleCreateNewBoardClick}
             className="flex items-center space-x-2 px-5 py-4 text-[#635fc7] cursor-pointer"
@@ -71,6 +73,7 @@ const HeaderDropdown = ({ setOpenDropdown, setBoardModalOpen }) => {
             <span className="text-lg font-bold">Create New Board</span>
           </div>
 
+          {/* Dark mode switcher */}
           <div
             className="mx-2 p-4 space-x-2 flex justify-center items-center bg-slate-100 
           dark:bg-[#02212c] rounded-lg"
