@@ -4,7 +4,6 @@ import Header from "./components/Header/Header";
 import BoardHome from "./components/Board/BoardHome";
 import EmptyBoard from "./components/EmptyBoard/EmptyBoard";
 import boardsSlice from "./redux/boardsSlice";
-import Sidebar from "./components/Sidebar/Sidebar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ const App = () => {
             boardModalOpen={isBoardModalOpen}
             setBoardModalOpen={setIsBoardModalOpen}
           />
-          <Sidebar />
 
           <BoardHome
             setIsBoardModalOpen={setIsBoardModalOpen}
