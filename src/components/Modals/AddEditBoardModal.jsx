@@ -17,11 +17,11 @@ const AddEditBoardModal = ({ setIsBoardModalOpen, type }) => {
   ]);
 
   useEffect(() => {
-    if (type === "edit" && board && newColumns.length === 2) {
+    if (type === "edit" && board) {
       setNewColumns(board.columns.map((col) => ({ ...col, id: uuidv4() })));
       setName(board.name);
     }
-  }, [board, type, newColumns.length]);
+  }, [board, type]);
 
   const handleColumnChange = (id, newValue) => {
     setNewColumns((prevState) => {

@@ -98,7 +98,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
         {isDeleteModalOpen && (
           <DeleteBoardModal
             type="board"
-            title={board.name}
+            title={board ? board.name : "No Active Board"}
             onDeleteBtnClick={onDeleteBtnClick}
             setIsDeleteModalOpen={(state) =>
               setModalState((prevState) => ({
@@ -123,7 +123,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
 
           <div className="flex items-center">
             <h3 className="md:ml-20 text-xl md:text-2xl font-bold max-w-48 truncate">
-              {board.name}
+              {board ? board.name : "No Active Board"} {/* Fallback value */}
             </h3>
 
             <div
