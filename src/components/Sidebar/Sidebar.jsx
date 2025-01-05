@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Switch } from "@headlessui/react";
 import {
   IoLayersOutline,
   IoMoonOutline,
@@ -5,26 +8,19 @@ import {
   IoEyeOffOutline,
   IoEyeOutline,
 } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import useDarkMode from "../../Hooks/useDarkMode";
 import boardsSlice from "../../redux/boardsSlice";
-import { Switch } from "@headlessui/react";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
 
 const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
   const dispatch = useDispatch();
   const [colorTheme, setColorTheme] = useDarkMode();
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
-  const [darkSide, setDarkSide] = useState(
-    colorTheme === "light" ? true : false
-  );
 
   const boards = useSelector((state) => state.boards);
 
   const toggleDarkMode = (checked) => {
-    setColorTheme(colorTheme);
-    setDarkSide(checked);
+    setColorTheme(checked ? "dark" : "light");
   };
 
   return (
@@ -85,15 +81,17 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                 >
                   <IoSunnyOutline className="h-5 w-5 text-gray-600" />
                   <Switch
-                    checked={darkSide}
+                    checked={colorTheme === "dark"}
                     onChange={toggleDarkMode}
                     className={`${
-                      darkSide ? "bg-[#635fc7]" : "bg-gray-200"
+                      colorTheme === "dark" ? "bg-[#635fc7]" : "bg-gray-200"
                     } relative inline-flex h-6 w-11 items-center rounded-full`}
                   >
                     <span
                       className={`${
-                        darkSide ? "translate-x-6" : "translate-x-1"
+                        colorTheme === "dark"
+                          ? "translate-x-6"
+                          : "translate-x-1"
                       } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                     ></span>
                   </Switch>
@@ -105,18 +103,18 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
 
           {isSideBarOpen ? (
             <div
-              onClick={() => setIsSideBarOpen((state) => !state)}
+              onClick={() => setIsSideBarOpen((prevState) => !prevState)}
               className="flex items-center mt-2 absolute bottom-16 text-lg font-bold  rounded-r-full hover:text-[#635FC7] cursor-pointer mr-6 mb-8 px-8 py-4 hover:bg-[#635fc71a] dark:hover:bg-white space-x-2 justify-center my-4 text-gray-500"
             >
-              <IoEyeOffOutline className=" min-w-[20px]" />
+              <IoEyeOffOutline className="min-w-[20px]" />
               {isSideBarOpen && <span> Hide Sidebar </span>}
             </div>
           ) : (
             <div
               onClick={() => setIsSideBarOpen((state) => !state)}
-              className="absolute p-5"
+              className="absolute p-4"
             >
-              <IoEyeOutline className=" min-w-[20px]" />
+              <IoEyeOutline className="h-5 w-5 text-gray-300" />
             </div>
           )}
         </div>
