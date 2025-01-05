@@ -10,7 +10,7 @@ function useDarkMode() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  return [theme, setTheme]; // Return the actual theme and the setter function
+  return [theme, setTheme];
 }
 
 export default useDarkMode;

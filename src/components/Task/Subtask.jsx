@@ -4,27 +4,35 @@ import boardsSlice from "../../redux/boardsSlice";
 function Subtask({ index, taskIndex, colIndex }) {
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.boards);
-  const board = boards.find((board) => board.isActive === true);
-  const col = board.columns.find((col, i) => i === colIndex);
-  const task = col.tasks.find((task, i) => i === taskIndex);
-  const subtask = task.subtasks.find((subtask, i) => i === index);
+  const activeBoard = boards.find((board) => board.isActive);
+  const col = activeBoard.columns[colIndex];
+  const task = col.tasks[taskIndex];
+  const subtask = task.subtasks[index];
   const checked = subtask.isCompleted;
 
-  const onChange = (e) => {
+  const onChange = () => {
     dispatch(
-      boardsSlice.actions.setSubtaskCompleted({ index, taskIndex, colIndex })
+      boardsSlice.actions.setSubtaskCompleted({
+        subtaskIndex: index,
+        taskIndex,
+        colIndex,
+      })
     );
   };
 
   return (
-    <div className=" w-full flex hover:bg-[#635fc740] dark:hover:bg-[#635fc740] rounded-md relative items-center justify-start dark:bg-[#20212c]  p-3 gap-4  bg-[#f4f7fd]">
+    <div
+      className="w-full flex items-center justify-start gap-4 p-3 rounded-md relative 
+    bg-[#f4f7fd] dark:bg-[#20212c] hover:bg-[#635fc740] dark:hover:bg-[#635fc740]"
+    >
       <input
-        className=" w-4 h-4  accent-[#635fc7] cursor-pointer "
+        className="w-4 h-4 cursor-pointer accent-[#635fc7]"
         type="checkbox"
         checked={checked}
         onChange={onChange}
+        aria-labelledby={`subtask-${index}`}
       />
-      <p className={checked ? " line-through opacity-30" : undefined}>
+      <p className={checked ? "line-through opacity-30" : undefined}>
         {subtask.title}
       </p>
     </div>
