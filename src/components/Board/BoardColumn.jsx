@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import boardsSlice from "../../redux/boardsSlice";
 import { getRandomColor } from "../../helpers/getRandomColor";
 import Task from "../Task/Task";
-import boardsSlice from "../../redux/boardsSlice";
 
 const BoardColumn = ({ colIndex }) => {
   const [color] = useState(getRandomColor());
-
   const dispatch = useDispatch();
+
   const boards = useSelector((state) => state.boards);
-  const board = boards.find((board) => board.isActive === true);
-  const col = board.columns.find((col, i) => i === colIndex);
+  const activeBoard = boards.find((board) => board.isActive) || {};
+  const activeCol = activeBoard?.columns?.[colIndex] || { name: "", tasks: [] };
 
   const handleOnDragOver = (e) => {
     e.preventDefault();
@@ -32,17 +32,19 @@ const BoardColumn = ({ colIndex }) => {
     <div
       onDrop={handleOnDrop}
       onDragOver={handleOnDragOver}
-      className="scrollbar-hide mx-5 pt-24 min-w-72"
+      className="min-w-72 mx-5 pt-24"
     >
+      {/* Column Header */}
       <span
-        className="font-semibold flex items-center gap-2 tracking-widest md:tracking-[.2em]
-      text-[#828fa3]"
+        className="flex items-center gap-2 font-semibold tracking-widest 
+      md:tracking-[.2em] text-[#828fa3]"
       >
-        <span className={`rounded-full w-4 h-4 ${color}`}></span>
-        {col.name} ({col?.tasks?.length})
+        <span className={`w-4 h-4 rounded-full ${color}`}></span>
+        {activeCol.name} ({activeCol.tasks?.length ?? 0})
       </span>
 
-      {col.tasks?.map((task, index) => (
+      {/* Task List */}
+      {activeCol.tasks?.map((task, index) => (
         <Task key={index} taskIndex={index} colIndex={colIndex} />
       ))}
     </div>
