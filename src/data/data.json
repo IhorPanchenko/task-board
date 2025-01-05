@@ -128,55 +128,6 @@
                   "isCompleted": false
                 }
               ]
-            },
-            {
-              "title": "Add search enpoints",
-              "description": "",
-              "status": "Doing",
-              "subtasks": [
-                {
-                  "title": "Add search endpoint",
-                  "isCompleted": true
-                },
-                {
-                  "title": "Define search filters",
-                  "isCompleted": false
-                }
-              ]
-            },
-            {
-              "title": "Add authentication endpoints",
-              "description": "",
-              "status": "Doing",
-              "subtasks": [
-                {
-                  "title": "Define user model",
-                  "isCompleted": true
-                },
-                {
-                  "title": "Add auth endpoints",
-                  "isCompleted": false
-                }
-              ]
-            },
-            {
-              "title": "Research pricing points of various competitors and trial different business models",
-              "description": "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
-              "status": "Doing",
-              "subtasks": [
-                {
-                  "title": "Research competitor pricing and business models",
-                  "isCompleted": true
-                },
-                {
-                  "title": "Outline a business model that works for our solution",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Talk to potential customers about our proposed solution and ask for fair price expectancy",
-                  "isCompleted": false
-                }
-              ]
             }
           ]
         },
@@ -246,36 +197,6 @@
               "subtasks": [
                 {
                   "title": "Interview 10 prospective customers",
-                  "isCompleted": true
-                }
-              ]
-            },
-            {
-              "title": "Competitor analysis",
-              "description": "",
-              "status": "Done",
-              "subtasks": [
-                {
-                  "title": "Find direct and indirect competitors",
-                  "isCompleted": true
-                },
-                {
-                  "title": "SWOT analysis for each competitor",
-                  "isCompleted": true
-                }
-              ]
-            },
-            {
-              "title": "Research the market",
-              "description": "We need to get a solid overview of the market to ensure we have up-to-date estimates of market size and demand.",
-              "status": "Done",
-              "subtasks": [
-                {
-                  "title": "Write up research analysis",
-                  "isCompleted": true
-                },
-                {
-                  "title": "Calculate TAM",
                   "isCompleted": true
                 }
               ]

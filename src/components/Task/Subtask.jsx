@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import boardsSlice from "../../redux/boardsSlice";
 
-function Subtask({ index, taskIndex, colIndex }) {
+const Subtask = ({ index, taskIndex, colIndex }) => {
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.boards);
   const activeBoard = boards.find((board) => board.isActive);
@@ -37,6 +37,6 @@ function Subtask({ index, taskIndex, colIndex }) {
       </p>
     </div>
   );
-}
+};
 
 export default Subtask;
