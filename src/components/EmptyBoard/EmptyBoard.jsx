@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import AddEditBoardModal from "../modals/AddEditBoardModal";
 
 const EmptyBoard = ({ type }) => {
