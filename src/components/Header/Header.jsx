@@ -15,6 +15,7 @@ import DeleteBoardModal from "../modals/DeleteBoardModal";
 
 const Header = ({ boardModalOpen, setBoardModalOpen }) => {
   const dispatch = useDispatch();
+
   const [modalState, setModalState] = useState({
     openDropdown: false,
     isDeleteModalOpen: false,
@@ -50,6 +51,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
       ...prevState,
       openDropdown: !prevState.openDropdown,
       isElipsisOpen: false,
+      boardType: "add",
     }));
   };
 
@@ -63,11 +65,17 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
   const renderModals = () => {
     const { openDropdown, isDeleteModalOpen, openAddEditTask, boardType } =
       modalState;
+
     return (
       <>
         {openDropdown && (
           <HeaderDropdown
-            setOpenDropdown={setModalState}
+            setOpenDropdown={(state) =>
+              setModalState((prevState) => ({
+                ...prevState,
+                openDropdown: state,
+              }))
+            }
             setBoardModalOpen={setBoardModalOpen}
           />
         )}

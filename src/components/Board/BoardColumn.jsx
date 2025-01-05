@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import boardsSlice from "../../redux/boardsSlice";
-
-import boardsSlice from "../../redux/boardsSlice";
 import { getRandomColor } from "../../helpers/getRandomColor";
-
 import Task from "../Task/Task";
 
 const BoardColumn = ({ colIndex }) => {
