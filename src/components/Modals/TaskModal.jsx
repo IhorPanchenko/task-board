@@ -1,61 +1,54 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoEllipsisVertical } from "react-icons/io5";
+import boardsSlice from "../../redux/boardsSlice";
 import ElipsisMenu from "../ElipsisMenu/ElipsisMenu";
 import AddEditTaskModal from "../modals/AddEditTaskModal";
 import DeleteBoardModal from "../modals/DeleteBoardModal";
 import Subtask from "../Task/Subtask";
-import boardsSlice from "../../redux/boardsSlice";
 
 const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
   const dispatch = useDispatch();
   const [isElipsisMenuOpen, setIsElipsisMenuOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const boards = useSelector((state) => state.boards);
-  const board = boards.find((board) => board.isActive === true);
-  const columns = board.columns;
-  const col = columns.find((col, i) => i === colIndex);
-  const task = col.tasks.find((task, i) => i === taskIndex);
-  const subtasks = task.subtasks;
+  const board = boards.find((board) => board.isActive);
+  const { columns } = board;
+  const { title, description, subtasks, status } =
+    columns[colIndex].tasks[taskIndex];
 
-  let completed = 0;
-  subtasks.forEach((subtask) => {
-    if (subtask.isCompleted) {
-      completed++;
-    }
-  });
+  const [currentStatus, setCurrentStatus] = useState(status);
+  const completed = subtasks.filter((subtask) => subtask.isCompleted).length;
+  const [newColIndex, setNewColIndex] = useState(
+    columns.indexOf(columns[colIndex])
+  );
 
-  const [status, setStatus] = useState(task.status);
-  const [newColIndex, setNewColIndex] = useState(columns.indexOf(col));
-  const onChange = (e) => {
-    setStatus(e.target.value);
+  const onChange = useCallback((e) => {
+    setCurrentStatus(e.target.value);
     setNewColIndex(e.target.selectedIndex);
-  };
+  }, []);
 
-  const onClose = (e) => {
-    if (e.target !== e.currentTarget) {
-      return;
-    }
-    dispatch(
-      boardsSlice.actions.setTaskStatus({
-        taskIndex,
-        colIndex,
-        newColIndex,
-        status,
-      })
-    );
-    setIsTaskModalOpen(false);
-  };
-
-  const onDeleteBtnClick = (e) => {
-    if (e.target.textContent === "Delete") {
-      dispatch(boardsSlice.actions.deleteTask({ taskIndex, colIndex }));
+  const onClose = useCallback(
+    (e) => {
+      if (e.target !== e.currentTarget) return;
+      dispatch(
+        boardsSlice.actions.setTaskStatus({
+          taskIndex,
+          colIndex,
+          newColIndex,
+          status,
+        })
+      );
       setIsTaskModalOpen(false);
-      setIsDeleteModalOpen(false);
-    } else {
-      setIsDeleteModalOpen(false);
-    }
-  };
+    },
+    [dispatch, status, newColIndex, colIndex, taskIndex, setIsTaskModalOpen]
+  );
+
+  const onDeleteBtnClick = useCallback(() => {
+    dispatch(boardsSlice.actions.deleteTask({ taskIndex, colIndex }));
+    setIsTaskModalOpen(false);
+    setIsDeleteModalOpen(false);
+  }, [dispatch, taskIndex, colIndex, setIsTaskModalOpen, setIsDeleteModalOpen]);
 
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
 
@@ -72,21 +65,14 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
   return (
     <div
       onClick={onClose}
-      className="fixed right-0 top-0 px-2 py-4 overflow-scroll scrollbar-hide z-50 left-0 
-      bottom-0 justify-center items-center flex bg-[#00000080]"
+      className="fixed inset-0 flex justify-center items-center px-2 py-4 overflow-scroll scrollbar-hide z-50 bg-[#00000080]"
     >
-      <div
-        className="scrollbar-hide overflow-y-scroll max-h-[95vh] my-auto bg-white 
-      dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md 
-      shadow-[#364e7e1a] max-w-md mx-auto w-full px-8 py-8 rounded-xl"
-      >
+      <div className="scrollbar-hide overflow-y-scroll max-h-[95vh] my-auto bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md shadow-[#364e7e1a] max-w-md mx-auto w-full px-8 py-8 rounded-xl">
         <div className="relative flex justify-between w-full items-center">
-          <h1 className="text-lg">{task.title}</h1>
+          <h1 className="text-lg">{title}</h1>
 
           <IoEllipsisVertical
-            onClick={() => {
-              setIsElipsisMenuOpen((prevState) => !prevState);
-            }}
+            onClick={() => setIsElipsisMenuOpen((prevState) => !prevState)}
             className="w-5 h-5 text-gray-500 cursor-pointer"
           />
 
@@ -100,7 +86,7 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
         </div>
 
         <p className="text-gray-500 font-semibold tracking-wide text-sm pt-6">
-          {task.description}
+          {description}
         </p>
 
         <p className="pt-6 text-gray-500 tracking-widest text-xs">
@@ -108,16 +94,14 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
         </p>
 
         <div className="mt-3 space-y-2">
-          {subtasks.map((subtask, index) => {
-            return (
-              <Subtask
-                key={index}
-                index={index}
-                taskIndex={taskIndex}
-                colIndex={colIndex}
-              />
-            );
-          })}
+          {subtasks.map((subtask, index) => (
+            <Subtask
+              key={index}
+              index={index}
+              taskIndex={taskIndex}
+              colIndex={colIndex}
+            />
+          ))}
         </div>
 
         <div className="mt-8 flex flex-col space-y-3">
@@ -127,14 +111,10 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
           <select
             value={status}
             onChange={onChange}
-            className="select-status flex-grow px-4 py-2 rounded-md text-sm 
-            bg-transparent focus:border-0 border border-bg-gray-300 focus:outline-[#635fc7]
-            outline-none"
+            className="select-status flex-grow px-4 py-2 rounded-md text-sm bg-transparent border border-bg-gray-300 focus:outline-none focus:border-0 focus:outline-[#635fc7]"
           >
             {columns.map((column, index) => (
-              <option key={index} className="">
-                {column.name}
-              </option>
+              <option key={index}>{column.name}</option>
             ))}
           </select>
         </div>
@@ -143,7 +123,7 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
       {isDeleteModalOpen && (
         <DeleteBoardModal
           type="task"
-          title={task.title}
+          title={title}
           onDeleteBtnClick={onDeleteBtnClick}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
         />
