@@ -38,8 +38,26 @@ const boardsSlice = createSlice({
       const { title, status, description, subtasks, newColIndex } =
         action.payload;
       const task = { title, description, subtasks, status };
+
       const board = state.find((board) => board.isActive);
-      const column = board.columns.find((col, index) => index === newColIndex);
+      if (!board) {
+        console.error("No active board found.");
+        return;
+      }
+
+      board.columns = board.columns || [];
+
+      const column = board.columns[newColIndex] || {
+        name: status,
+        tasks: [],
+      };
+
+      column.tasks = column.tasks || [];
+
+      if (!board.columns[newColIndex]) {
+        board.columns[newColIndex] = column;
+      }
+
       column.tasks.push(task);
     },
     editTask: (state, action) => {
@@ -67,9 +85,32 @@ const boardsSlice = createSlice({
     dragTask: (state, action) => {
       const { colIndex, prevColIndex, taskIndex } = action.payload;
       const board = state.find((board) => board.isActive);
-      const prevCol = board.columns.find((col, i) => i === prevColIndex);
+
+      if (!board) {
+        console.error("No active board found.");
+        return;
+      }
+
+      const prevCol = board.columns[prevColIndex];
+      if (!prevCol || !prevCol.tasks) {
+        console.error("Invalid previous column or tasks are not initialized.");
+        return;
+      }
+
       const task = prevCol.tasks.splice(taskIndex, 1)[0];
-      board.columns.find((col, i) => i === colIndex).tasks.push(task);
+      if (!task) {
+        console.error("No task found to move.");
+        return;
+      }
+
+      const targetCol = board.columns[colIndex];
+      if (!targetCol) {
+        console.error("Target column does not exist.");
+        return;
+      }
+
+      targetCol.tasks = targetCol.tasks || [];
+      targetCol.tasks.push(task);
     },
     setSubtaskCompleted: (state, action) => {
       const payload = action.payload;

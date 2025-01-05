@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { IoCloseOutline } from "react-icons/io5";
@@ -8,7 +8,6 @@ const AddEditTaskModal = ({
   type,
   device,
   setIsAddTaskModalOpen,
-  setIsTaskModalOpen,
   taskIndex,
   prevColIndex = 0,
 }) => {
@@ -17,26 +16,46 @@ const AddEditTaskModal = ({
   const [isValid, setIsValid] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
-  const board = useSelector((state) => state.boards).find(
-    (board) => board.isActive
-  );
-
-  const columns = board.columns;
-  const col = columns.find((col, index) => index === prevColIndex);
-  const task = col ? col.tasks.find((task, index) => index === taskIndex) : [];
-  const [status, setStatus] = useState(columns[prevColIndex].name);
+  const [status, setStatus] = useState("");
   const [newColIndex, setNewColIndex] = useState(prevColIndex);
+
   const [subtasks, setSubtasks] = useState([
     { title: "", isCompleted: false, id: uuidv4() },
-    { title: "", isCompleted: false, id: uuidv4() },
   ]);
+
+  const [error, setError] = useState({
+    title: "",
+    subtasks: "",
+  });
+
+  const board = useSelector((state) =>
+    state.boards.find((board) => board.isActive)
+  );
+  const columns = board.columns;
+
+  useEffect(() => {
+    if (type === "edit" && isFirstLoad) {
+      const col = columns[prevColIndex];
+      const task = col
+        ? col.tasks.find((task, index) => index === taskIndex)
+        : {};
+      setSubtasks(
+        task.subtasks.map((subtask) => ({ ...subtask, id: uuidv4() }))
+      );
+      setTitle(task.title);
+      setDescription(task.description);
+      setStatus(col.name);
+      setIsFirstLoad(false);
+    }
+  }, [type, isFirstLoad, prevColIndex, taskIndex, columns, type]);
 
   const handleChange = (id, newValue) => {
     setSubtasks((prevState) => {
       const newState = [...prevState];
-      const setSubtask = newState.find((setSubtask) => setSubtask.id === id);
-      setSubtask.title = newValue;
+      const setSubtask = newState.find((subtask) => subtask.id === id);
+      if (setSubtask) {
+        setSubtask.title = newValue;
+      }
       return newState;
     });
   };
@@ -51,31 +70,24 @@ const AddEditTaskModal = ({
   };
 
   const validate = () => {
-    setIsValid(false);
+    let isValid = true;
+    const newError = {
+      title: "",
+      subtasks: "",
+    };
+
     if (!title.trim()) {
-      return false;
+      newError.title = "Title is required";
+      isValid = false;
+    }
+    if (subtasks.some((subtask) => !subtask.title.trim())) {
+      newError.subtasks = "At least one subtask must be added";
+      isValid = false;
     }
 
-    for (let i = 0; i < subtasks.length; i++) {
-      if (!subtasks[i].title.trim()) {
-        return false;
-      }
-    }
-
-    setIsValid(true);
-    return true;
+    setError(newError);
+    return isValid;
   };
-
-  if (type === "edit" && isFirstLoad) {
-    setSubtasks(
-      task.subtasks.map((subtask) => {
-        return { ...subtask, id: uuidv4() };
-      })
-    );
-    setTitle(task.title);
-    setDescription(task.description);
-    setIsFirstLoad(false);
-  }
 
   const onSubmit = (type) => {
     if (type === "add") {
@@ -101,109 +113,106 @@ const AddEditTaskModal = ({
         })
       );
     }
+    setIsAddTaskModalOpen(false);
   };
 
   return (
     <div
       onClick={(e) => {
-        if (e.target !== e.currentTarget) {
-          return;
-        }
+        if (e.target !== e.currentTarget) return;
         setIsAddTaskModalOpen(false);
       }}
-      className={
-        device === "mobile"
-          ? "py-6 px-6 pb-40 absolute overflow-y-scroll left-0 flex right-0 bottom-[-100vh] top-0 bg-[#00000080]"
-          : "py-6 px-6 pb-40 absolute overflow-y-scroll left-0 flex right-0 bottom-0 top-0 bg-[#00000080]"
-      }
+      className={`absolute left-0 right-0 top-0 py-6 px-6 pb-40 overflow-y-scroll bg-[#00000080] flex ${
+        device === "mobile" ? "bottom-[-100vh]" : "bottom-0"
+      }`}
     >
+      {/* Modal content container */}
       <div
-        className="scrollbar-hide overflow-y-scroll max-h-[95vh] my-auto bg-white
-      dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md shadow-[#364e7e1a]
-        max-w-md mx-auto w-full px-8 py-8 rounded-xl"
+        className="max-w-md w-full px-8 py-8 max-h-[95vh] mx-auto my-auto bg-white 
+      dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md 
+      shadow-[#364e7e1a] rounded-xl overflow-y-scroll scrollbar-hide"
       >
         <h3 className="text-lg">{type === "edit" ? "Edit" : "Add New"} Task</h3>
 
+        {/* Task Name input field */}
         <div className="mt-8 flex flex-col space-y-1">
-          <label className="text-sm dark:text-white text-gray-500">
-            Task Name
+          <label className="text-sm text-gray-500 dark:text-white">
+            Task Name *
           </label>
           <input
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
             value={title}
             type="text"
             placeholder="e.g Take coffee break"
-            className="bg-transparent px-4 py-2 outline-none focus:border-0 rounded-md text-sm
-            border border-gray-600 focus:outline-[#635fc7] ring-0"
+            className="bg-transparent px-4 py-2 text-sm border border-gray-600 rounded-md 
+            outline-none focus:outline-[#635fc7] focus:border-0 ring-0"
           />
+          {error.title && <p className="text-red-500 text-xs">{error.title}</p>}
         </div>
 
+        {/* Description input field */}
         <div className="mt-8 flex flex-col space-y-1">
-          <label className="text-sm dark:text-white text-gray-500">
+          <label className="text-sm text-gray-500 dark:text-white">
             Description
           </label>
           <textarea
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
+            onChange={(e) => setDescription(e.target.value)}
             value={description}
             placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
-            className="bg-transparent px-4 py-2 outline-none focus:border-0 min-h-52 
-            rounded-md text-sm border border-gray-600 focus:outline-[#635fc7] ring-0"
+            className="bg-transparent px-4 py-2 text-sm border border-gray-600 rounded-md 
+            outline-none focus:outline-[#635fc7] focus:border-0 min-h-52 ring-0 resize-none"
           />
         </div>
 
+        {/* Subtasks input fields */}
         <div className="mt-8 flex flex-col space-y-1">
-          <label className="text-sm dark:text-white text-gray-500">
-            Subtasks
+          <label className="text-sm text-gray-500 dark:text-white">
+            Subtasks *
           </label>
-
           {subtasks.map((subtask) => (
             <div key={subtask.id} className="flex items-center w-full">
               <input
-                onChange={(e) => {
-                  handleChange(subtask.id, e.target.value);
-                }}
+                onChange={(e) => handleChange(subtask.id, e.target.value)}
                 type="text"
-                value={subtasks.title}
+                value={subtask.title}
                 placeholder="e.g Take coffee break"
-                className="bg-transparent outline-none focus:border-0 border flex-grow px-4 
-                py-2 rounded-md text-sm border-gray-600 focus:outline-[#635fc7]"
+                className="bg-transparent mb-2 px-4 py-2 text-sm border border-gray-600 
+                rounded-md outline-none focus:outline-[#635fc7] focus:border-0 flex-grow ring-0"
               />
               <IoCloseOutline
-                onClick={() => {
-                  handleDelete(subtask.id);
-                }}
+                onClick={() => handleDelete(subtask.id)}
                 className="h-5 w-5 text-gray-600 cursor-pointer m-1"
               />
             </div>
           ))}
+          {error.subtasks && (
+            <p className="text-red-500 text-xs">{error.subtasks}</p>
+          )}
 
           <button
-            onClick={() => {
+            onClick={() =>
               setSubtasks((state) => [
                 ...state,
                 { title: "", isCompleted: false, id: uuidv4() },
-              ]);
-            }}
-            className="w-full items-center dark:text-[#635fc7] dark:bg-white 
-          text-white bg-[#635fc7] py-2 rounded-full"
+              ])
+            }
+            className="w-full items-center py-2 rounded-full bg-[#635fc7] text-white 
+            hover:opacity-75 dark:bg-white dark:text-[#635fc7]"
           >
             + Add New Subtask
           </button>
         </div>
 
+        {/* Current status dropdown */}
         <div className="mt-8 flex flex-col space-y-3">
-          <label className="text-sm dark:text-white text-gray-500">
+          <label className="text-sm text-gray-500 dark:text-white">
             Current status
           </label>
           <select
             value={status}
-            onChange={(e) => handleChangeStatus(e)}
-            className="flex flex-grow px-4 py-2 rounded-md text-sm bg-transparent 
-            focus:border-0 border border-gray-300 focus:outline-[#635fc7] outline-none"
+            onChange={handleChangeStatus}
+            className="flex-grow px-4 py-2 text-sm bg-transparent border border-gray-300 
+            rounded-md outline-none focus:outline-[#635fc7] focus:border-0 ring-0"
           >
             {columns.map((column) => (
               <option value={column.name} key={column.name}>
@@ -213,14 +222,9 @@ const AddEditTaskModal = ({
           </select>
 
           <button
-            onClick={() => {
-              const isValid = validate();
-              if (isValid) {
-                onSubmit(type);
-                setIsAddTaskModalOpen(false);
-              }
-            }}
-            className="w-full items-center text-white bg-[#635fc7] py-2 rounded-full"
+            onClick={() => validate() && onSubmit(type)}
+            className="w-full items-center py-2 rounded-full bg-[#635fc7] text-white 
+            hover:opacity-75"
           >
             {type === "edit" ? "Save Edit" : "Create Task"}
           </button>
