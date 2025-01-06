@@ -25,16 +25,21 @@ const Subtask = ({ index, taskIndex, colIndex }) => {
       className="w-full flex items-center justify-start gap-4 p-3 rounded-md relative 
     bg-[#f4f7fd] dark:bg-[#20212c] hover:bg-[#635fc740] dark:hover:bg-[#635fc740]"
     >
-      <input
-        className="w-4 h-4 cursor-pointer accent-[#635fc7]"
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        aria-labelledby={`subtask-${index}`}
-      />
-      <p className={checked ? "line-through opacity-30" : undefined}>
-        {subtask.title}
-      </p>
+      <label
+        htmlFor={`subtask-checkbox-${index}`}
+        className="flex items-center w-full cursor-pointer"
+      >
+        <input
+          id={`subtask-checkbox-${index}`}
+          className="w-4 h-4 cursor-pointer accent-[#635fc7]"
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+        />
+        <p className={checked ? "line-through opacity-30" : undefined}>
+          {subtask.title}
+        </p>
+      </label>
     </div>
   );
 };

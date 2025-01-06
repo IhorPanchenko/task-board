@@ -50,16 +50,13 @@ Preview the production build.
 - **React**: A JavaScript library for building user interfaces.
 - **Vite**: A next-generation, fast build tool for modern web projects.
 - **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
-- **React Beautiful DnD**: A drag-and-drop library for React that provides intuitive drag-and-drop capabilities.
 - **React Icons**: A library for easily integrating icons into React components.
-- **React Modal**: A reusable modal for adding tasks.
 
 ---
 
 ## Custom Helpers:
 
 - **`getRandomColors`**: A utility function to return random color schemes.
-- **`getRandomImage`**: A function that returns a random image from [Picsum](https://picsum.photos) for dynamic task visuals.
 - **`onDragEnd`**: A function that manages the drag-and-drop state update for the columns.
 
 ```

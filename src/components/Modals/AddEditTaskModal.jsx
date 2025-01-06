@@ -136,10 +136,14 @@ const AddEditTaskModal = ({
 
         {/* Task Name input field */}
         <div className="mt-8 flex flex-col space-y-1">
-          <label className="text-sm text-gray-500 dark:text-white">
+          <label
+            htmlFor="task-name-input"
+            className="text-sm text-gray-500 dark:text-white"
+          >
             Task Name *
           </label>
           <input
+            id="task-name-input"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             type="text"
@@ -152,10 +156,14 @@ const AddEditTaskModal = ({
 
         {/* Description input field */}
         <div className="mt-8 flex flex-col space-y-1">
-          <label className="text-sm text-gray-500 dark:text-white">
+          <label
+            htmlFor="description-textarea"
+            className="text-sm text-gray-500 dark:text-white"
+          >
             Description
           </label>
           <textarea
+            id="description-textarea"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
@@ -166,12 +174,17 @@ const AddEditTaskModal = ({
 
         {/* Subtasks input fields */}
         <div className="mt-8 flex flex-col space-y-1">
-          <label className="text-sm text-gray-500 dark:text-white">
+          <span className="text-sm text-gray-500 dark:text-white">
             Subtasks *
-          </label>
+          </span>
           {subtasks.map((subtask) => (
             <div key={subtask.id} className="flex items-center w-full">
+              <label htmlFor={`subtask-${subtask.id}`} className="sr-only">
+                Subtask {subtask.id}
+              </label>
+
               <input
+                id={`subtask-${subtask.id}`}
                 onChange={(e) => handleChange(subtask.id, e.target.value)}
                 type="text"
                 value={subtask.title}
@@ -205,10 +218,14 @@ const AddEditTaskModal = ({
 
         {/* Current status dropdown */}
         <div className="mt-8 flex flex-col space-y-3">
-          <label className="text-sm text-gray-500 dark:text-white">
+          <label
+            htmlFor="status-select"
+            className="text-sm text-gray-500 dark:text-white"
+          >
             Current status
           </label>
           <select
+            id="status-select"
             value={status}
             onChange={handleChangeStatus}
             className="flex-grow px-4 py-2 text-sm bg-transparent border border-gray-300 

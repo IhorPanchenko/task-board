@@ -70,7 +70,10 @@ const AddEditBoardModal = ({ setIsBoardModalOpen, type }) => {
         </h3>
 
         <div className="mt-8 flex flex-col space-y-3">
-          <label className="text-sm text-gray-500 dark:text-white">
+          <label
+            htmlFor="board-name-input"
+            className="text-sm text-gray-500 dark:text-white"
+          >
             Board Name
           </label>
           <input
@@ -83,13 +86,17 @@ const AddEditBoardModal = ({ setIsBoardModalOpen, type }) => {
         </div>
 
         <div className="mt-8 flex flex-col space-y-3">
-          <label className="text-sm text-gray-500 dark:text-white">
+          <span className="text-sm text-gray-500 dark:text-white">
             Board Columns
-          </label>
+          </span>
 
           {newColumns.map((column) => (
             <div key={column.id} className="flex items-center w-full">
+              <label htmlFor={`column-${column.id}`} className="sr-only">
+                Column Name
+              </label>
               <input
+                id={`column-${column.id}`}
                 type="text"
                 value={column.name}
                 onChange={(e) => handleColumnChange(column.id, e.target.value)}
