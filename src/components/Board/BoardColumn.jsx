@@ -32,12 +32,12 @@ const BoardColumn = ({ colIndex }) => {
     <div
       onDrop={handleOnDrop}
       onDragOver={handleOnDragOver}
-      className="min-w-72 mx-5 pt-24"
+      className="min-w-72 mx-5"
     >
       {/* Column Header */}
       <span
         className="flex items-center gap-2 font-semibold tracking-widest 
-      md:tracking-[.2em] text-[#828fa3]"
+        md:tracking-[.2em] text-[#828fa3]"
       >
         <span className={`w-4 h-4 rounded-full ${color}`}></span>
         {activeCol.name} ({activeCol.tasks?.length ?? 0})

@@ -122,7 +122,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
           </h3>
 
           <div className="flex items-center">
-            <h3 className="md:ml-20 text-xl md:text-2xl font-bold max-w-48 truncate">
+            <h3 className="md:ml-20 text-xl md:text-2xl font-bold max-w-50 truncate">
               {board ? board.name : "No Active Board"} {/* Fallback value */}
             </h3>
 
