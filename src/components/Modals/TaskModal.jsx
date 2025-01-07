@@ -113,12 +113,14 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
           </label>
           <select
             id="current-status-select"
-            value={status}
+            value={currentStatus}
             onChange={onChange}
             className="select-status flex-grow px-4 py-2 rounded-md text-sm bg-transparent border border-bg-gray-300 focus:outline-none focus:border-0 focus:outline-[#635fc7]"
           >
             {columns.map((column, index) => (
-              <option key={index}>{column.name}</option>
+              <option key={index} className="bg-white dark:bg-[#2b2c37]">
+                {column.name}
+              </option>
             ))}
           </select>
         </div>
