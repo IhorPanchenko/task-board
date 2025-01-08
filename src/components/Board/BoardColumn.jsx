@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import boardsSlice from "../../redux/boardsSlice";
 import { getRandomColor } from "../../helpers/getRandomColor";
 import Task from "../Task/Task";
+import AddEditTaskModal from "../modals/AddEditTaskModal";
 
 const BoardColumn = ({ colIndex }) => {
   const [color] = useState(getRandomColor());
   const dispatch = useDispatch();
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
 
   const boards = useSelector((state) => state.boards);
   const activeBoard = boards.find((board) => board.isActive) || {};
@@ -28,6 +30,10 @@ const BoardColumn = ({ colIndex }) => {
     }
   };
 
+  const toggleAddTaskModal = () => {
+    setIsAddTaskModalOpen((prevState) => !prevState);
+  };
+
   return (
     <div
       onDrop={handleOnDrop}
@@ -47,6 +53,25 @@ const BoardColumn = ({ colIndex }) => {
       {activeCol.tasks?.map((task, index) => (
         <Task key={index} taskIndex={index} colIndex={colIndex} />
       ))}
+
+      {/* Add New Task Button */}
+      <div className="flex justify-center">
+        <button
+          onClick={toggleAddTaskModal}
+          className="block button"
+          aria-label="Add New Task"
+        >
+          + Add New Task
+        </button>
+      </div>
+
+      {isAddTaskModalOpen && (
+        <AddEditTaskModal
+          type="add"
+          setIsAddTaskModalOpen={toggleAddTaskModal}
+          colIndex={colIndex}
+        />
+      )}
     </div>
   );
 };

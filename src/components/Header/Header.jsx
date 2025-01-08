@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IoChevronDownOutline,
@@ -9,12 +9,12 @@ import logo from "../../assets/logo.svg";
 import boardsSlice from "../../redux/boardsSlice";
 import HeaderDropdown from "./HeaderDropdown";
 import AddEditBoardModal from "../modals/AddEditBoardModal";
-import AddEditTaskModal from "../modals/AddEditTaskModal";
 import ElipsisMenu from "../ElipsisMenu/ElipsisMenu";
 import DeleteBoardModal from "../modals/DeleteBoardModal";
 
 const Header = ({ boardModalOpen, setBoardModalOpen }) => {
   const dispatch = useDispatch();
+  const elipsisMenuRef = useRef(null);
 
   const [modalState, setModalState] = useState({
     openDropdown: false,
@@ -55,16 +55,28 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
     }));
   };
 
-  const toggleAddEditTask = () => {
-    setModalState((prevState) => ({
-      ...prevState,
-      openAddEditTask: !prevState.openAddEditTask,
-    }));
-  };
+  const handleClickOutside = useCallback((event) => {
+    if (
+      elipsisMenuRef.current &&
+      !elipsisMenuRef.current.contains(event.target)
+    ) {
+      setModalState((prevState) => ({ ...prevState, isElipsisOpen: false }));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (modalState.isElipsisOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modalState.isElipsisOpen, handleClickOutside]);
 
   const renderModals = () => {
-    const { openDropdown, isDeleteModalOpen, openAddEditTask, boardType } =
-      modalState;
+    const { openDropdown, isDeleteModalOpen, boardType } = modalState;
 
     return (
       <>
@@ -87,14 +99,6 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
           />
         )}
 
-        {openAddEditTask && (
-          <AddEditTaskModal
-            type="add"
-            device="mobile"
-            setIsAddTaskModalOpen={toggleAddEditTask}
-          />
-        )}
-
         {isDeleteModalOpen && (
           <DeleteBoardModal
             type="board"
@@ -113,7 +117,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
   };
 
   return (
-    <div className="fixed left-0 right-0 p-4 z-50 bg-white dark:bg-[#2b2c37]">
+    <div className="fixed left-0 right-0 p-4 z-60 bg-white dark:bg-[#2b2c37]">
       <header className="flex items-center justify-between dark:text-white">
         <div className="flex items-center space-x-2 md:space-x-4">
           <img src={logo} alt="logo" className="h-6 w-6" />
@@ -123,7 +127,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
 
           <div className="flex items-center">
             <h3 className="md:ml-20 text-xl md:text-2xl font-bold max-w-50 truncate">
-              {board ? board.name : "No Active Board"} {/* Fallback value */}
+              {board ? board.name : "No Active Board"}
             </h3>
 
             <div
@@ -139,23 +143,7 @@ const Header = ({ boardModalOpen, setBoardModalOpen }) => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4 md:space-x-6">
-          <button
-            onClick={toggleAddEditTask}
-            className="hidden md:block button"
-            aria-label="Add New Task"
-          >
-            + Add New Task
-          </button>
-
-          <button
-            onClick={toggleAddEditTask}
-            className="md:hidden py-1 px-3 button"
-            aria-label="Add New Task"
-          >
-            +
-          </button>
-
+        <div ref={elipsisMenuRef} className="flex items-center space-x-4">
           <IoEllipsisVertical
             onClick={() => {
               setModalState((prevState) => ({

@@ -121,20 +121,20 @@ const AddEditTaskModal = ({
         if (e.target !== e.currentTarget) return;
         setIsAddTaskModalOpen(false);
       }}
-      className={`absolute left-0 right-0 top-0 py-6 px-6 pb-40 overflow-y-scroll bg-[#00000080] flex ${
+      className={`absolute left-0 right-0 top-0 py-6 px-6 pb-10 overflow-y-scroll bg-[#00000080] flex ${
         device === "mobile" ? "bottom-[-100vh]" : "bottom-0"
       }`}
     >
       {/* Modal content container */}
       <div
-        className="max-w-md w-full px-8 py-8 max-h-[95vh] mx-auto my-auto bg-white 
-      dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md 
+        className="max-w-md w-full px-8 py-4 max-h-[95vh] mx-auto my-auto bg-white 
+      dark:bg-[#2b2c37] z-50 text-black dark:text-white font-bold shadow-md 
       shadow-[#364e7e1a] rounded-xl overflow-y-scroll scrollbar-hide"
       >
         <h3 className="text-lg">{type === "edit" ? "Edit" : "Add New"} Task</h3>
 
         {/* Task Name input field */}
-        <div className="mt-8 flex flex-col space-y-1">
+        <div className="mt-4 flex flex-col space-y-1">
           <label
             htmlFor="task-name-input"
             className="text-sm text-gray-500 dark:text-white"

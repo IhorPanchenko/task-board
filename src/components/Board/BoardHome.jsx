@@ -46,7 +46,7 @@ const BoardHome = () => {
     <div
       className={`flex h-screen gap-6 overflow-x-auto overflow-y-hidden ${
         isDesktop && isSideBarOpen ? "ml-[261px]" : "overflow-x-hidden"
-      } bg-[#f4f7fd] dark:bg-[#20212c] `}
+      } bg-[#f4f7fd] dark:bg-[#20212c]`}
     >
       {/* Sidebar */}
       {isDesktop && (

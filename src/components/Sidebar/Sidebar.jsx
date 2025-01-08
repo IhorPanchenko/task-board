@@ -28,7 +28,7 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
       <div
         className={
           isSideBarOpen
-            ? `min-w-[261px] bg-white dark:bg-[#2b2c37] fixed top-[72px] h-screen  items-center left-0 z-20`
+            ? `min-w-[261px] bg-white dark:bg-[#2b2c37] fixed top-[72px] h-screen  items-center left-0 z-60`
             : `bg-[#635FC7] dark:bg-[#2b2c37] dark:hover:bg-[#635FC7] top-auto bottom-10 justify-center items-center hover:opacity-80 cursor-pointer  p-0 transition duration-300 transform fixed felx w-[56px] h-[48px] rounded-r-full  `
         }
       >
@@ -43,7 +43,7 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                 <div>
                   {boards.map((board, index) => (
                     <div
-                      className={` flex items-center space-x-2 px-5 mr-8 rounded-r-full 
+                      className={`flex items-center space-x-2 px-5 mr-8 rounded-r-full 
                       duration-500 ease-in-out py-4 cursor-pointer hover:bg-[#635fc71a] 
                       hover:text-[#635fc7] dark:hover:bg-white dark:hover:text-[#635fc7] 
                       dark:text-white ${
