@@ -13,7 +13,6 @@ const AddEditTaskModal = ({
 }) => {
   const dispatch = useDispatch();
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [isValid, setIsValid] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
@@ -77,7 +76,7 @@ const AddEditTaskModal = ({
     };
 
     if (!title.trim()) {
-      newError.title = "Title is required";
+      newError.title = "Please provide Task Name";
       isValid = false;
     }
     if (subtasks.some((subtask) => !subtask.title.trim())) {
@@ -192,10 +191,13 @@ const AddEditTaskModal = ({
                 className="bg-transparent mb-2 px-4 py-2 text-sm border border-gray-600 
                 rounded-md outline-none focus:outline-[#635fc7] focus:border-0 flex-grow ring-0"
               />
-              <IoCloseOutline
-                onClick={() => handleDelete(subtask.id)}
-                className="h-5 w-5 text-gray-600 cursor-pointer m-1"
-              />
+
+              {subtasks.length > 1 && (
+                <IoCloseOutline
+                  onClick={() => handleDelete(subtask.id)}
+                  className="h-5 w-5 text-gray-600 cursor-pointer m-1"
+                />
+              )}
             </div>
           ))}
           {error.subtasks && (
@@ -232,7 +234,11 @@ const AddEditTaskModal = ({
             rounded-md outline-none focus:outline-[#635fc7] focus:border-0 ring-0"
           >
             {columns.map((column) => (
-              <option value={column.name} key={column.name}>
+              <option
+                value={column.name}
+                key={column.name}
+                className="bg-white dark:bg-[#2b2c37]"
+              >
                 {column.name}
               </option>
             ))}

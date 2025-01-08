@@ -31,7 +31,7 @@ const Subtask = ({ index, taskIndex, colIndex }) => {
       >
         <input
           id={`subtask-checkbox-${index}`}
-          className="w-4 h-4 cursor-pointer accent-[#635fc7]"
+          className="w-4 h-4 mr-3 cursor-pointer accent-[#635fc7]"
           type="checkbox"
           checked={checked}
           onChange={onChange}

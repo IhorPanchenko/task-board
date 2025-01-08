@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoEllipsisVertical } from "react-icons/io5";
 import boardsSlice from "../../redux/boardsSlice";
@@ -36,7 +36,7 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
           taskIndex,
           colIndex,
           newColIndex,
-          status,
+          status: currentStatus,
         })
       );
       setIsTaskModalOpen(false);
@@ -58,8 +58,8 @@ const TaskModal = ({ colIndex, taskIndex, setIsTaskModalOpen }) => {
   };
 
   const setOpenDeleteModal = () => {
-    setIsElipsisMenuOpen(false);
     setIsDeleteModalOpen(true);
+    setIsElipsisMenuOpen(false);
   };
 
   return (

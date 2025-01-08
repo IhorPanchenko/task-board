@@ -80,9 +80,15 @@ const AddEditBoardModal = ({ setIsBoardModalOpen, type }) => {
             className="bg-transparent px-4 py-2 text-sm border border-gray-600 rounded-md outline-none focus:outline-[#635fc7]"
             placeholder="e.g Web Design"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              setIsValid(true);
+            }}
             id="board-name-input"
           />
+          {!isValid && !name.trim() && (
+            <p className="text-sm text-red-500">Please provide Board Name</p>
+          )}
         </div>
 
         <div className="mt-8 flex flex-col space-y-3">

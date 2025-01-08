@@ -20,14 +20,16 @@ const Task = ({ taskIndex, colIndex }) => {
     );
   };
 
+  const handleOpenModal = () => {
+    setIsTaskModalOpen(true);
+  };
+
   return (
     <div>
       <div
         onDragStart={handleOnDrag}
         draggable
-        onClick={() => {
-          setIsTaskModalOpen(true);
-        }}
+        onClick={handleOpenModal}
         className="w-72 first:my-5 rounded-lg py-6 px-3 bg-white dark:bg-[#2b2c37] 
         shadow-lg shadow-[#364e7e1a] hover:text-[#635fc7] dark:text-white 
         dark:hover:text-[#635fc7] cursor-pointer"
