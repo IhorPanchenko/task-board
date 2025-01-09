@@ -109,6 +109,8 @@ const boardsSlice = createSlice({
         return;
       }
 
+      task.status = targetCol.name || `Column ${colIndex + 1}`;
+
       targetCol.tasks = targetCol.tasks || [];
       targetCol.tasks.push(task);
     },
