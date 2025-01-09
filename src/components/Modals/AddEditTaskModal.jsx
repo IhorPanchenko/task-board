@@ -10,12 +10,13 @@ const AddEditTaskModal = ({
   setIsAddTaskModalOpen,
   taskIndex,
   prevColIndex = 0,
+  defaultStatus = "",
 }) => {
   const dispatch = useDispatch();
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(defaultStatus);
   const [newColIndex, setNewColIndex] = useState(prevColIndex);
 
   const [subtasks, setSubtasks] = useState([

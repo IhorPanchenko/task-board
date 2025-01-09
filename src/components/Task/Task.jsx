@@ -30,7 +30,7 @@ const Task = ({ taskIndex, colIndex }) => {
         onDragStart={handleOnDrag}
         draggable
         onClick={handleOpenModal}
-        className="w-72 first:my-5 rounded-lg py-6 px-3 bg-white dark:bg-[#2b2c37] 
+        className="w-72 first:mt-5 rounded-lg py-6 px-3 bg-white dark:bg-[#2b2c37] 
         shadow-lg shadow-[#364e7e1a] hover:text-[#635fc7] dark:text-white 
         dark:hover:text-[#635fc7] cursor-pointer"
       >

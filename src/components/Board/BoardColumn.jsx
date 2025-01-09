@@ -55,7 +55,7 @@ const BoardColumn = ({ colIndex }) => {
       ))}
 
       {/* Add New Task Button */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-5">
         <button
           onClick={toggleAddTaskModal}
           className="block button"
@@ -70,6 +70,7 @@ const BoardColumn = ({ colIndex }) => {
           type="add"
           setIsAddTaskModalOpen={toggleAddTaskModal}
           colIndex={colIndex}
+          defaultStatus={activeCol.name}
         />
       )}
     </div>
