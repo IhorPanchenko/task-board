@@ -132,13 +132,42 @@ const boardsSlice = createSlice({
     setTaskStatus: (state, action) => {
       const payload = action.payload;
       const board = state.find((board) => board.isActive);
+
+      if (!board) {
+        console.error("No active board found.");
+        return;
+      }
+
       const columns = board.columns;
-      const col = columns.find((col, i) => i === payload.colIndex);
+      const col = columns[payload.colIndex];
+
+      if (!col) {
+        console.error("Column not found.");
+        return;
+      }
+
       if (payload.colIndex === payload.newColIndex) return;
-      const task = col.tasks.find((task, i) => i === payload.taskIndex);
+
+      const task = col.tasks[payload.taskIndex];
+      if (!task) {
+        console.error("Task not found.");
+        return;
+      }
+
       task.status = payload.status;
-      col.tasks = col.tasks.filter((task, i) => i !== payload.taskIndex);
-      const newCol = columns.find((col, i) => i === payload.newColIndex);
+
+      col.tasks = col.tasks.filter((_, i) => i !== payload.taskIndex);
+
+      const newCol = columns[payload.newColIndex];
+      if (!newCol) {
+        console.error("Target column not found.");
+        return;
+      }
+
+      if (!newCol.tasks) {
+        newCol.tasks = [];
+      }
+
       newCol.tasks.push(task);
     },
     deleteTask: (state, action) => {
