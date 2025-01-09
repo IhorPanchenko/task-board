@@ -1,6 +1,5 @@
 import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-
 import Sidebar from "../Sidebar/Sidebar";
 import BoardColumn from "./BoardColumn";
 import EmptyBoard from "../EmptyBoard/EmptyBoard";

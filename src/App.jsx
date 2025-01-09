@@ -18,7 +18,7 @@ const App = () => {
   }, [dispatch, activeBoard, boards.length]);
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden bg-[#f4f7fd] dark:bg-green-500">
+    <div className="w-screen h-screen relative overflow-hidden bg-[#f4f7fd] dark:bg-[#20212c]">
       {boards.length > 0 ? (
         <>
           <Header
